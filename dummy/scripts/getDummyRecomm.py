@@ -4,7 +4,7 @@ import os
 import uuid
 
 __location__ = os.path.realpath(
-        os.path.join(os.getcwd(), os.path.dirname(__file__)))
+    os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
 def openJsonFile():
@@ -15,9 +15,10 @@ def openJsonFile():
 
 
 def getProductList():
-    product_list_file = open(os.path.join(__location__, "dummy_product_names"), "r")
+    product_list_file = open(
+        os.path.join(__location__, "dummy_product_names"), "r")
     prod_list = [line.strip() for line in product_list_file]
-    product_list_file.close
+    product_list_file.close()
     return prod_list
 
 
