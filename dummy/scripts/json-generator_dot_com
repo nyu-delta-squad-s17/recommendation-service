@@ -1,0 +1,21 @@
+[
+  '{{repeat(10, 10)}}',
+  {
+    _id: '{{objectId()}}',
+    // guid: '{{guid()}}',
+    product_name: function (tags) {
+      var prod_name = ["Round-Touch", "Open-In", "Rankbam", "Stanron", "Zimron", "Phys-Cof", "Sumwarm", "Doncof", "Stanphase", "Tiptax", "Konktam", "Zenfresh", "Kaytech", "Trans Fix", "Villanix", "Rancom", "Damtough", "Hatflex", "Physlight", "Zaamdamjob", "Techphase", "Intone", "Kay Dox", "Stimfix", "Sunfix", "Softis", "Vento Fax", "Alpha Tom", "Freshnix", "Konkis"];
+      return prod_name[tags.integer(0, prod_name.length - 1)];
+    },    
+    recommendations: [
+      '{{repeat(1,5)}}',
+      {
+        rec_priority: '{{index()}}',
+        rec_prod_name: function (tags) {
+        return 'mock';
+        }
+      }
+    ]
+    
+  }
+]

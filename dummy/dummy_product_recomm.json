@@ -1,0 +1,170 @@
+{
+    "Alpha Tom": {
+        "_id": "58a6c10c692eb0c8249ece58", 
+        "product_name": "Alpha Tom", 
+        "recommendations": [
+            {
+                "rec_priority": 0, 
+                "rec_prod_name": "Stanphase"
+            }, 
+            {
+                "rec_priority": 1, 
+                "rec_prod_name": "Vento Fax"
+            }, 
+            {
+                "rec_priority": 2, 
+                "rec_prod_name": "Zimron"
+            }, 
+            {
+                "rec_priority": 3, 
+                "rec_prod_name": "Zenfresh"
+            }
+        ]
+    }, 
+    "Hatflex": {
+        "_id": "58a6c10c98823e525b0f04f1", 
+        "product_name": "Hatflex", 
+        "recommendations": [
+            {
+                "rec_priority": 0, 
+                "rec_prod_name": "Intone"
+            }
+        ]
+    }, 
+    "Kaytech": {
+        "_id": "58a6c10c8e567a25cf3cd60c", 
+        "product_name": "Kaytech", 
+        "recommendations": [
+            {
+                "rec_priority": 0, 
+                "rec_prod_name": "Konkis"
+            }, 
+            {
+                "rec_priority": 1, 
+                "rec_prod_name": "Alpha Tom"
+            }, 
+            {
+                "rec_priority": 2, 
+                "rec_prod_name": "Softis"
+            }, 
+            {
+                "rec_priority": 3, 
+                "rec_prod_name": "Konkis"
+            }
+        ]
+    }, 
+    "Konktam": {
+        "_id": "58a6c10c21cbe9d34464ade5", 
+        "product_name": "Konktam", 
+        "recommendations": [
+            {
+                "rec_priority": 0, 
+                "rec_prod_name": "Zimron"
+            }, 
+            {
+                "rec_priority": 1, 
+                "rec_prod_name": "Vento Fax"
+            }, 
+            {
+                "rec_priority": 2, 
+                "rec_prod_name": "Alpha Tom"
+            }
+        ]
+    }, 
+    "Open-In": {
+        "_id": "58a6c10cf38fb20f64033265", 
+        "product_name": "Open-In", 
+        "recommendations": [
+            {
+                "rec_priority": 0, 
+                "rec_prod_name": "Phys-Cof"
+            }, 
+            {
+                "rec_priority": 1, 
+                "rec_prod_name": "Stanron"
+            }, 
+            {
+                "rec_priority": 2, 
+                "rec_prod_name": "Rancom"
+            }
+        ]
+    }, 
+    "Physlight": {
+        "_id": "58a6c10c9fbbc755e3845e40", 
+        "product_name": "Physlight", 
+        "recommendations": [
+            {
+                "rec_priority": 0, 
+                "rec_prod_name": "Freshnix"
+            }, 
+            {
+                "rec_priority": 1, 
+                "rec_prod_name": "Villanix"
+            }
+        ]
+    }, 
+    "Stanron": {
+        "_id": "58a6c10c6bb03153b560d093", 
+        "product_name": "Stanron", 
+        "recommendations": [
+            {
+                "rec_priority": 0, 
+                "rec_prod_name": "Zimron"
+            }, 
+            {
+                "rec_priority": 1, 
+                "rec_prod_name": "Alpha Tom"
+            }, 
+            {
+                "rec_priority": 2, 
+                "rec_prod_name": "Open-In"
+            }, 
+            {
+                "rec_priority": 3, 
+                "rec_prod_name": "Phys-Cof"
+            }
+        ]
+    }, 
+    "Vento Fax": {
+        "_id": "58a6c10cb8386cd6d314d77d", 
+        "product_name": "Vento Fax", 
+        "recommendations": [
+            {
+                "rec_priority": 0, 
+                "rec_prod_name": "Phys-Cof"
+            }, 
+            {
+                "rec_priority": 1, 
+                "rec_prod_name": "Stanphase"
+            }
+        ]
+    }, 
+    "Zaamdamjob": {
+        "_id": "58a6c10c79e9a736eb4d64c4", 
+        "product_name": "Zaamdamjob", 
+        "recommendations": [
+            {
+                "rec_priority": 0, 
+                "rec_prod_name": "Konkis"
+            }, 
+            {
+                "rec_priority": 1, 
+                "rec_prod_name": "Rancom"
+            }, 
+            {
+                "rec_priority": 2, 
+                "rec_prod_name": "Damtough"
+            }
+        ]
+    }, 
+    "Zenfresh": {
+        "_id": "58a6c10c1af8ac1e3a11a90c", 
+        "product_name": "Zenfresh", 
+        "recommendations": [
+            {
+                "rec_priority": 0, 
+                "rec_prod_name": "Tiptax"
+            }
+        ]
+    }
+}
