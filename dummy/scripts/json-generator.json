@@ -1,591 +1,616 @@
 [
   {
     "id": "mock_id",
-    "product_name": "Rancom",
+    "name": "Sunfix",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Zimron",
+    "name": "Stanphase",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
+        "priority": 2,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
+        "priority": 3,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 4,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Tiptax",
+    "name": "Stanphase",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Physlight",
+    "name": "Trans Fix",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Hatflex",
+    "name": "Vento Fax",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 1,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 2,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 3,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 4,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Stimfix",
+    "name": "Tiptax",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
+        "priority": 2,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Zenfresh",
+    "name": "Damtough",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
+        "priority": 2,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
+        "priority": 3,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 4,
-        "rec_prod_name": "mock"
+        "priority": 4,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Techphase",
+    "name": "Sunfix",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 1,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Sunfix",
+    "name": "Physlight",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 4,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Zimron",
+    "name": "Alpha Tom",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 2,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 3,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 4,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Vento Fax",
+    "name": "Sunfix",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
+        "priority": 2,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
+        "priority": 3,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Round-Touch",
+    "name": "Stanphase",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
+        "priority": 2,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 3,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Vento Fax",
+    "name": "Physlight",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Open-In",
+    "name": "Alpha Tom",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 1,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 2,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 3,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 4,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Techphase",
+    "name": "Kaytech",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
+        "priority": 2,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
+        "priority": 3,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 4,
-        "rec_prod_name": "mock"
+        "priority": 4,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Sumwarm",
+    "name": "Round-Touch",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Techphase",
+    "name": "Zimron",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 2,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 3,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 4,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Kay Dox",
+    "name": "Zenfresh",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
+        "priority": 2,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Phys-Cof",
+    "name": "Stimfix",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
+        "priority": 2,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Sumwarm",
+    "name": "Konkis",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 1,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Tiptax",
+    "name": "Freshnix",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
+        "priority": 2,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
+        "priority": 3,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 4,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Zenfresh",
+    "name": "Vento Fax",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 1,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Villanix",
+    "name": "Stanron",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Stanron",
+    "name": "Trans Fix",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 4,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Damtough",
+    "name": "Stanron",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
-      }
-    ]
-  },
-  {
-    "id": "mock_id",
-    "product_name": "Kaytech",
-    "recommendations": [
-      {
-        "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
-      }
-    ]
-  },
-  {
-    "id": "mock_id",
-    "product_name": "Zimron",
-    "recommendations": [
-      {
-        "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
-      }
-    ]
-  },
-  {
-    "id": "mock_id",
-    "product_name": "Damtough",
-    "recommendations": [
-      {
-        "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 2,
-        "rec_prod_name": "mock"
-      },
-      {
-        "id": "mock_id",
-        "rec_priority": 3,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Physlight",
+    "name": "Stanron",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
       },
       {
         "id": "mock_id",
-        "rec_priority": 1,
-        "rec_prod_name": "mock"
+        "priority": 1,
+        "name": "mock"
       }
     ]
   },
   {
     "id": "mock_id",
-    "product_name": "Tiptax",
+    "name": "Techphase",
     "recommendations": [
       {
         "id": "mock_id",
-        "rec_priority": 0,
-        "rec_prod_name": "mock"
+        "priority": 0,
+        "name": "mock"
+      }
+    ]
+  },
+  {
+    "id": "mock_id",
+    "name": "Zenfresh",
+    "recommendations": [
+      {
+        "id": "mock_id",
+        "priority": 0,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 1,
+        "name": "mock"
+      }
+    ]
+  },
+  {
+    "id": "mock_id",
+    "name": "Stanron",
+    "recommendations": [
+      {
+        "id": "mock_id",
+        "priority": 0,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 1,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 2,
+        "name": "mock"
+      },
+      {
+        "id": "mock_id",
+        "priority": 3,
+        "name": "mock"
+      }
+    ]
+  },
+  {
+    "id": "mock_id",
+    "name": "Konktam",
+    "recommendations": [
+      {
+        "id": "mock_id",
+        "priority": 0,
+        "name": "mock"
       }
     ]
   }

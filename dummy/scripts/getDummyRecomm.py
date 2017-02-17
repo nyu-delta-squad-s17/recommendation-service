@@ -34,14 +34,14 @@ if __name__ == "__main__":
     prod_dict = productIDMapper(getProductList())
 
     for product in products:
-        product["id"] = prod_dict[product["product_name"]]
+        product["id"] = prod_dict[product["name"]]
         tmp_prod_dict = dict(prod_dict)
 
         def getRandomProd():
             return random.choice(tmp_prod_dict.keys())
         for recs in product["recommendations"]:
             new_rec = getRandomProd()
-            recs["rec_prod_name"] = new_rec
+            recs["name"] = new_rec
             tmp_prod_dict.pop(new_rec, None)
             recs["id"] = prod_dict[new_rec]
 
