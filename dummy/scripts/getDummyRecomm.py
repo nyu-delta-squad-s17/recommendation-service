@@ -24,15 +24,18 @@ def getProductList():
 
 def productIDMapper(prod_list):
     result_dict = {}
+    prod_count = 0
     for product in prod_list:
         result_dict[product] = str(uuid.uuid4())[:8]
-    return result_dict
+        prod_count += 1
+    return result_dict, prod_count
 
 if __name__ == "__main__":
 
     result = {}
     products = openJsonFile()
-    prod_dict = productIDMapper(getProductList())
+    prod_dict, prod_count = productIDMapper(getProductList())
+
 
     for product in products:
         product["id"] = prod_dict[product["name"]]
