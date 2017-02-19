@@ -45,7 +45,8 @@ if __name__ == "__main__":
             recs["name"] = new_rec
             tmp_prod_dict.pop(new_rec, None)
             recs["id"] = prod_dict[new_rec]
+        result[product["id"]] = product
 
     with open(os.path.join(__location__, "../dummy_product_recomm.json"), "w")\
             as jsonFile:
-        jsonFile.write(json.dumps(products, indent=4, sort_keys=True))
+        jsonFile.write(json.dumps(result, indent=4, sort_keys=True))
