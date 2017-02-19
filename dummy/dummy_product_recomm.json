@@ -1,617 +1,537 @@
-[
-    {
-        "id": "793881d9", 
-        "name": "Sunfix", 
+{
+    "064088e1": {
+        "id": "064088e1", 
+        "name": "Damtough", 
         "recommendations": [
             {
-                "id": "04d7c821", 
-                "name": "Zimron", 
-                "priority": 0
-            }
-        ]
-    }, 
-    {
-        "id": "7e96a04b", 
-        "name": "Stanphase", 
-        "recommendations": [
-            {
-                "id": "1a6b8597", 
-                "name": "Softis", 
+                "id": "d19404b9", 
+                "name": "Sunfix", 
                 "priority": 0
             }, 
             {
-                "id": "4f857690", 
-                "name": "Intone", 
+                "id": "d10043e0", 
+                "name": "Open-In", 
                 "priority": 1
             }, 
             {
-                "id": "01c8b746", 
-                "name": "Konktam", 
+                "id": "1b9e1eb6", 
+                "name": "Techphase", 
                 "priority": 2
             }, 
             {
-                "id": "793881d9", 
-                "name": "Sunfix", 
+                "id": "2bbb123b", 
+                "name": "Stanron", 
                 "priority": 3
             }, 
             {
-                "id": "7bf1c38b", 
-                "name": "Round-Touch", 
+                "id": "1e74089a", 
+                "name": "Trans Fix", 
                 "priority": 4
             }
         ]
     }, 
-    {
-        "id": "7e96a04b", 
-        "name": "Stanphase", 
+    "0f580921": {
+        "id": "0f580921", 
+        "name": "Softis", 
         "recommendations": [
             {
-                "id": "78c5bbbe", 
-                "name": "Villanix", 
+                "id": "8d7ebb3e", 
+                "name": "Round-Touch", 
                 "priority": 0
             }, 
             {
-                "id": "6a093ad9", 
-                "name": "Rancom", 
-                "priority": 1
-            }
-        ]
-    }, 
-    {
-        "id": "3a7858e1", 
-        "name": "Trans Fix", 
-        "recommendations": [
-            {
-                "id": "01c8b746", 
-                "name": "Konktam", 
-                "priority": 0
-            }, 
-            {
-                "id": "c9532d28", 
+                "id": "a4416148", 
                 "name": "Freshnix", 
                 "priority": 1
             }
         ]
     }, 
-    {
-        "id": "4424d1bc", 
-        "name": "Vento Fax", 
+    "1b9e1eb6": {
+        "id": "1b9e1eb6", 
+        "name": "Techphase", 
         "recommendations": [
             {
-                "id": "01c8b746", 
-                "name": "Konktam", 
-                "priority": 0
-            }, 
-            {
-                "id": "1a6b8597", 
-                "name": "Softis", 
-                "priority": 1
-            }, 
-            {
-                "id": "7bf1c38b", 
-                "name": "Round-Touch", 
-                "priority": 2
-            }, 
-            {
-                "id": "1e88c325", 
-                "name": "Damtough", 
-                "priority": 3
-            }, 
-            {
-                "id": "2e0c2291", 
-                "name": "Physlight", 
-                "priority": 4
-            }
-        ]
-    }, 
-    {
-        "id": "6d802adb", 
-        "name": "Tiptax", 
-        "recommendations": [
-            {
-                "id": "7817743d", 
+                "id": "1b9e1eb6", 
                 "name": "Techphase", 
                 "priority": 0
-            }, 
-            {
-                "id": "1a6b8597", 
-                "name": "Softis", 
-                "priority": 1
-            }, 
-            {
-                "id": "4424d1bc", 
-                "name": "Vento Fax", 
-                "priority": 2
             }
         ]
     }, 
-    {
-        "id": "1e88c325", 
-        "name": "Damtough", 
+    "1e74089a": {
+        "id": "1e74089a", 
+        "name": "Trans Fix", 
         "recommendations": [
             {
-                "id": "5b6daa6b", 
-                "name": "Alpha Tom", 
-                "priority": 0
-            }, 
-            {
-                "id": "1a6b8597", 
-                "name": "Softis", 
-                "priority": 1
-            }, 
-            {
-                "id": "2e0c2291", 
-                "name": "Physlight", 
-                "priority": 2
-            }, 
-            {
-                "id": "7e96a04b", 
-                "name": "Stanphase", 
-                "priority": 3
-            }, 
-            {
-                "id": "7bf1c38b", 
-                "name": "Round-Touch", 
-                "priority": 4
-            }
-        ]
-    }, 
-    {
-        "id": "793881d9", 
-        "name": "Sunfix", 
-        "recommendations": [
-            {
-                "id": "3a7858e1", 
-                "name": "Trans Fix", 
-                "priority": 0
-            }, 
-            {
-                "id": "d51aa472", 
-                "name": "Rankbam", 
-                "priority": 1
-            }
-        ]
-    }, 
-    {
-        "id": "2e0c2291", 
-        "name": "Physlight", 
-        "recommendations": [
-            {
-                "id": "b4cd3d1a", 
-                "name": "Sumwarm", 
-                "priority": 0
-            }, 
-            {
-                "id": "21ee99a6", 
-                "name": "Kay Dox", 
-                "priority": 1
-            }
-        ]
-    }, 
-    {
-        "id": "5b6daa6b", 
-        "name": "Alpha Tom", 
-        "recommendations": [
-            {
-                "id": "6d802adb", 
-                "name": "Tiptax", 
-                "priority": 0
-            }, 
-            {
-                "id": "793881d9", 
+                "id": "d19404b9", 
                 "name": "Sunfix", 
-                "priority": 1
-            }, 
+                "priority": 0
+            }
+        ]
+    }, 
+    "2bbb123b": {
+        "id": "2bbb123b", 
+        "name": "Stanron", 
+        "recommendations": [
             {
-                "id": "5b6daa6b", 
-                "name": "Alpha Tom", 
-                "priority": 2
-            }, 
-            {
-                "id": "1e88c325", 
+                "id": "064088e1", 
                 "name": "Damtough", 
-                "priority": 3
-            }, 
-            {
-                "id": "7817743d", 
-                "name": "Techphase", 
-                "priority": 4
-            }
-        ]
-    }, 
-    {
-        "id": "793881d9", 
-        "name": "Sunfix", 
-        "recommendations": [
-            {
-                "id": "3a7858e1", 
-                "name": "Trans Fix", 
                 "priority": 0
             }, 
             {
-                "id": "dedd8a84", 
+                "id": "d10043e0", 
+                "name": "Open-In", 
+                "priority": 1
+            }, 
+            {
+                "id": "7e6cad9a", 
                 "name": "Phys-Cof", 
-                "priority": 1
-            }, 
-            {
-                "id": "a5bcb145", 
-                "name": "Zenfresh", 
                 "priority": 2
             }, 
             {
-                "id": "d51aa472", 
-                "name": "Rankbam", 
-                "priority": 3
-            }
-        ]
-    }, 
-    {
-        "id": "7e96a04b", 
-        "name": "Stanphase", 
-        "recommendations": [
-            {
-                "id": "2e0c2291", 
-                "name": "Physlight", 
-                "priority": 0
-            }, 
-            {
-                "id": "5b6daa6b", 
-                "name": "Alpha Tom", 
-                "priority": 1
-            }, 
-            {
-                "id": "4424d1bc", 
+                "id": "75598128", 
                 "name": "Vento Fax", 
-                "priority": 2
-            }, 
-            {
-                "id": "b4cd3d1a", 
-                "name": "Sumwarm", 
-                "priority": 3
-            }
-        ]
-    }, 
-    {
-        "id": "2e0c2291", 
-        "name": "Physlight", 
-        "recommendations": [
-            {
-                "id": "7bf1c38b", 
-                "name": "Round-Touch", 
-                "priority": 0
-            }
-        ]
-    }, 
-    {
-        "id": "5b6daa6b", 
-        "name": "Alpha Tom", 
-        "recommendations": [
-            {
-                "id": "a5bcb145", 
-                "name": "Zenfresh", 
-                "priority": 0
-            }, 
-            {
-                "id": "7bf1c38b", 
-                "name": "Round-Touch", 
-                "priority": 1
-            }, 
-            {
-                "id": "01c8b746", 
-                "name": "Konktam", 
-                "priority": 2
-            }, 
-            {
-                "id": "dbffcb78", 
-                "name": "Zaamdamjob", 
                 "priority": 3
             }, 
             {
-                "id": "6a093ad9", 
+                "id": "3a401a5b", 
                 "name": "Rancom", 
                 "priority": 4
             }
         ]
     }, 
-    {
-        "id": "e42b03ad", 
-        "name": "Kaytech", 
+    "3a401a5b": {
+        "id": "3a401a5b", 
+        "name": "Rancom", 
         "recommendations": [
             {
-                "id": "a5bcb145", 
-                "name": "Zenfresh", 
-                "priority": 0
-            }, 
-            {
-                "id": "a394a7a4", 
-                "name": "Stanron", 
-                "priority": 1
-            }, 
-            {
-                "id": "78c5bbbe", 
-                "name": "Villanix", 
-                "priority": 2
-            }, 
-            {
-                "id": "4d0fc588", 
-                "name": "Konkis", 
-                "priority": 3
-            }, 
-            {
-                "id": "b4cd3d1a", 
-                "name": "Sumwarm", 
-                "priority": 4
-            }
-        ]
-    }, 
-    {
-        "id": "7bf1c38b", 
-        "name": "Round-Touch", 
-        "recommendations": [
-            {
-                "id": "793881d9", 
-                "name": "Sunfix", 
-                "priority": 0
-            }, 
-            {
-                "id": "a5bcb145", 
-                "name": "Zenfresh", 
-                "priority": 1
-            }
-        ]
-    }, 
-    {
-        "id": "04d7c821", 
-        "name": "Zimron", 
-        "recommendations": [
-            {
-                "id": "1e88c325", 
-                "name": "Damtough", 
-                "priority": 0
-            }, 
-            {
-                "id": "7bf1c38b", 
-                "name": "Round-Touch", 
-                "priority": 1
-            }, 
-            {
-                "id": "a394a7a4", 
-                "name": "Stanron", 
-                "priority": 2
-            }, 
-            {
-                "id": "4f857690", 
-                "name": "Intone", 
-                "priority": 3
-            }, 
-            {
-                "id": "3a7858e1", 
-                "name": "Trans Fix", 
-                "priority": 4
-            }
-        ]
-    }, 
-    {
-        "id": "a5bcb145", 
-        "name": "Zenfresh", 
-        "recommendations": [
-            {
-                "id": "2e0c2291", 
-                "name": "Physlight", 
-                "priority": 0
-            }, 
-            {
-                "id": "8129893a", 
-                "name": "Stimfix", 
-                "priority": 1
-            }, 
-            {
-                "id": "dedd8a84", 
-                "name": "Phys-Cof", 
-                "priority": 2
-            }
-        ]
-    }, 
-    {
-        "id": "8129893a", 
-        "name": "Stimfix", 
-        "recommendations": [
-            {
-                "id": "21ee99a6", 
-                "name": "Kay Dox", 
-                "priority": 0
-            }, 
-            {
-                "id": "a394a7a4", 
-                "name": "Stanron", 
-                "priority": 1
-            }, 
-            {
-                "id": "01c8b746", 
+                "id": "61c52d80", 
                 "name": "Konktam", 
+                "priority": 0
+            }, 
+            {
+                "id": "c8610b71", 
+                "name": "Villanix", 
+                "priority": 1
+            }, 
+            {
+                "id": "a094a450", 
+                "name": "Zenfresh", 
                 "priority": 2
             }
         ]
     }, 
-    {
-        "id": "4d0fc588", 
-        "name": "Konkis", 
+    "46a1fec1": {
+        "id": "46a1fec1", 
+        "name": "Physlight", 
         "recommendations": [
             {
-                "id": "4424d1bc", 
+                "id": "75598128", 
                 "name": "Vento Fax", 
                 "priority": 0
             }, 
             {
-                "id": "e42b03ad", 
+                "id": "cc1809d9", 
+                "name": "Rankbam", 
+                "priority": 1
+            }, 
+            {
+                "id": "add25542", 
+                "name": "Stimfix", 
+                "priority": 2
+            }
+        ]
+    }, 
+    "547e7829": {
+        "id": "547e7829", 
+        "name": "Stanphase", 
+        "recommendations": [
+            {
+                "id": "bdfc7dd4", 
+                "name": "Intone", 
+                "priority": 0
+            }, 
+            {
+                "id": "add25542", 
+                "name": "Stimfix", 
+                "priority": 1
+            }, 
+            {
+                "id": "984dc7d2", 
+                "name": "Kay Dox", 
+                "priority": 2
+            }
+        ]
+    }, 
+    "61c52d80": {
+        "id": "61c52d80", 
+        "name": "Konktam", 
+        "recommendations": [
+            {
+                "id": "a80a1fca", 
+                "name": "Sumwarm", 
+                "priority": 0
+            }, 
+            {
+                "id": "ef6fbb63", 
+                "name": "Tiptax", 
+                "priority": 1
+            }, 
+            {
+                "id": "663a28eb", 
+                "name": "Hatflex", 
+                "priority": 2
+            }
+        ]
+    }, 
+    "663a28eb": {
+        "id": "663a28eb", 
+        "name": "Hatflex", 
+        "recommendations": [
+            {
+                "id": "064088e1", 
+                "name": "Damtough", 
+                "priority": 0
+            }, 
+            {
+                "id": "7e6cad9a", 
+                "name": "Phys-Cof", 
+                "priority": 1
+            }, 
+            {
+                "id": "2bbb123b", 
+                "name": "Stanron", 
+                "priority": 2
+            }
+        ]
+    }, 
+    "75598128": {
+        "id": "75598128", 
+        "name": "Vento Fax", 
+        "recommendations": [
+            {
+                "id": "917839b6", 
+                "name": "Kaytech", 
+                "priority": 0
+            }
+        ]
+    }, 
+    "7e6cad9a": {
+        "id": "7e6cad9a", 
+        "name": "Phys-Cof", 
+        "recommendations": [
+            {
+                "id": "7e6cad9a", 
+                "name": "Phys-Cof", 
+                "priority": 0
+            }
+        ]
+    }, 
+    "84d50990": {
+        "id": "84d50990", 
+        "name": "Konkis", 
+        "recommendations": [
+            {
+                "id": "61c52d80", 
+                "name": "Konktam", 
+                "priority": 0
+            }, 
+            {
+                "id": "cc1809d9", 
+                "name": "Rankbam", 
+                "priority": 1
+            }
+        ]
+    }, 
+    "869461b4": {
+        "id": "869461b4", 
+        "name": "Alpha Tom", 
+        "recommendations": [
+            {
+                "id": "61c52d80", 
+                "name": "Konktam", 
+                "priority": 0
+            }, 
+            {
+                "id": "46a1fec1", 
+                "name": "Physlight", 
+                "priority": 1
+            }
+        ]
+    }, 
+    "882739d2": {
+        "id": "882739d2", 
+        "name": "Zimron", 
+        "recommendations": [
+            {
+                "id": "882739d2", 
+                "name": "Zimron", 
+                "priority": 0
+            }
+        ]
+    }, 
+    "8d7ebb3e": {
+        "id": "8d7ebb3e", 
+        "name": "Round-Touch", 
+        "recommendations": [
+            {
+                "id": "917839b6", 
+                "name": "Kaytech", 
+                "priority": 0
+            }, 
+            {
+                "id": "bdfc7dd4", 
+                "name": "Intone", 
+                "priority": 1
+            }
+        ]
+    }, 
+    "917839b6": {
+        "id": "917839b6", 
+        "name": "Kaytech", 
+        "recommendations": [
+            {
+                "id": "c8610b71", 
+                "name": "Villanix", 
+                "priority": 0
+            }, 
+            {
+                "id": "1b9e1eb6", 
+                "name": "Techphase", 
+                "priority": 1
+            }, 
+            {
+                "id": "ef706bf9", 
+                "name": "Doncof", 
+                "priority": 2
+            }, 
+            {
+                "id": "84d50990", 
+                "name": "Konkis", 
+                "priority": 3
+            }
+        ]
+    }, 
+    "984dc7d2": {
+        "id": "984dc7d2", 
+        "name": "Kay Dox", 
+        "recommendations": [
+            {
+                "id": "a094a450", 
+                "name": "Zenfresh", 
+                "priority": 0
+            }, 
+            {
+                "id": "ef706bf9", 
+                "name": "Doncof", 
+                "priority": 1
+            }, 
+            {
+                "id": "547e7829", 
+                "name": "Stanphase", 
+                "priority": 2
+            }, 
+            {
+                "id": "984dc7d2", 
+                "name": "Kay Dox", 
+                "priority": 3
+            }
+        ]
+    }, 
+    "a094a450": {
+        "id": "a094a450", 
+        "name": "Zenfresh", 
+        "recommendations": [
+            {
+                "id": "869461b4", 
+                "name": "Alpha Tom", 
+                "priority": 0
+            }
+        ]
+    }, 
+    "a4416148": {
+        "id": "a4416148", 
+        "name": "Freshnix", 
+        "recommendations": [
+            {
+                "id": "84d50990", 
+                "name": "Konkis", 
+                "priority": 0
+            }, 
+            {
+                "id": "d10043e0", 
+                "name": "Open-In", 
+                "priority": 1
+            }
+        ]
+    }, 
+    "a80a1fca": {
+        "id": "a80a1fca", 
+        "name": "Sumwarm", 
+        "recommendations": [
+            {
+                "id": "add25542", 
+                "name": "Stimfix", 
+                "priority": 0
+            }, 
+            {
+                "id": "917839b6", 
                 "name": "Kaytech", 
                 "priority": 1
             }
         ]
     }, 
-    {
-        "id": "c9532d28", 
-        "name": "Freshnix", 
+    "add25542": {
+        "id": "add25542", 
+        "name": "Stimfix", 
         "recommendations": [
             {
-                "id": "dedd8a84", 
-                "name": "Phys-Cof", 
+                "id": "61c52d80", 
+                "name": "Konktam", 
                 "priority": 0
             }, 
             {
-                "id": "6a093ad9", 
-                "name": "Rancom", 
+                "id": "ef6fbb63", 
+                "name": "Tiptax", 
+                "priority": 1
+            }
+        ]
+    }, 
+    "bdfc7dd4": {
+        "id": "bdfc7dd4", 
+        "name": "Intone", 
+        "recommendations": [
+            {
+                "id": "0f580921", 
+                "name": "Softis", 
+                "priority": 0
+            }
+        ]
+    }, 
+    "c8610b71": {
+        "id": "c8610b71", 
+        "name": "Villanix", 
+        "recommendations": [
+            {
+                "id": "1b9e1eb6", 
+                "name": "Techphase", 
+                "priority": 0
+            }, 
+            {
+                "id": "547e7829", 
+                "name": "Stanphase", 
                 "priority": 1
             }, 
             {
-                "id": "4d0fc588", 
-                "name": "Konkis", 
+                "id": "46a1fec1", 
+                "name": "Physlight", 
                 "priority": 2
             }, 
             {
-                "id": "8129893a", 
-                "name": "Stimfix", 
+                "id": "bdfc7dd4", 
+                "name": "Intone", 
                 "priority": 3
             }, 
             {
-                "id": "2e0c2291", 
-                "name": "Physlight", 
+                "id": "ef6fbb63", 
+                "name": "Tiptax", 
                 "priority": 4
             }
         ]
     }, 
-    {
-        "id": "4424d1bc", 
-        "name": "Vento Fax", 
+    "cc1809d9": {
+        "id": "cc1809d9", 
+        "name": "Rankbam", 
         "recommendations": [
             {
-                "id": "2e0c2291", 
-                "name": "Physlight", 
+                "id": "2bbb123b", 
+                "name": "Stanron", 
                 "priority": 0
             }, 
             {
-                "id": "c9532d28", 
-                "name": "Freshnix", 
+                "id": "d19404b9", 
+                "name": "Sunfix", 
                 "priority": 1
             }
         ]
     }, 
-    {
-        "id": "a394a7a4", 
-        "name": "Stanron", 
+    "d10043e0": {
+        "id": "d10043e0", 
+        "name": "Open-In", 
         "recommendations": [
             {
-                "id": "78c5bbbe", 
-                "name": "Villanix", 
+                "id": "a094a450", 
+                "name": "Zenfresh", 
                 "priority": 0
-            }
-        ]
-    }, 
-    {
-        "id": "3a7858e1", 
-        "name": "Trans Fix", 
-        "recommendations": [
+            }, 
             {
-                "id": "a394a7a4", 
+                "id": "2bbb123b", 
                 "name": "Stanron", 
+                "priority": 1
+            }
+        ]
+    }, 
+    "d19404b9": {
+        "id": "d19404b9", 
+        "name": "Sunfix", 
+        "recommendations": [
+            {
+                "id": "064088e1", 
+                "name": "Damtough", 
+                "priority": 0
+            }, 
+            {
+                "id": "84d50990", 
+                "name": "Konkis", 
+                "priority": 1
+            }
+        ]
+    }, 
+    "d50105c3": {
+        "id": "d50105c3", 
+        "name": "Zaamdamjob", 
+        "recommendations": [
+            {
+                "id": "869461b4", 
+                "name": "Alpha Tom", 
                 "priority": 0
             }
         ]
     }, 
-    {
-        "id": "a394a7a4", 
-        "name": "Stanron", 
+    "ef6fbb63": {
+        "id": "ef6fbb63", 
+        "name": "Tiptax", 
         "recommendations": [
             {
-                "id": "54a9db0a", 
+                "id": "d10043e0", 
                 "name": "Open-In", 
                 "priority": 0
             }, 
             {
-                "id": "4f857690", 
-                "name": "Intone", 
-                "priority": 1
-            }
-        ]
-    }, 
-    {
-        "id": "a394a7a4", 
-        "name": "Stanron", 
-        "recommendations": [
-            {
-                "id": "4424d1bc", 
-                "name": "Vento Fax", 
-                "priority": 0
-            }, 
-            {
-                "id": "01c8b746", 
-                "name": "Konktam", 
-                "priority": 1
-            }
-        ]
-    }, 
-    {
-        "id": "7817743d", 
-        "name": "Techphase", 
-        "recommendations": [
-            {
-                "id": "4d0fc588", 
-                "name": "Konkis", 
-                "priority": 0
-            }
-        ]
-    }, 
-    {
-        "id": "a5bcb145", 
-        "name": "Zenfresh", 
-        "recommendations": [
-            {
-                "id": "2e0c2291", 
-                "name": "Physlight", 
-                "priority": 0
-            }, 
-            {
-                "id": "fd26e243", 
-                "name": "Hatflex", 
-                "priority": 1
-            }
-        ]
-    }, 
-    {
-        "id": "a394a7a4", 
-        "name": "Stanron", 
-        "recommendations": [
-            {
-                "id": "04d7c821", 
-                "name": "Zimron", 
-                "priority": 0
-            }, 
-            {
-                "id": "4f857690", 
+                "id": "bdfc7dd4", 
                 "name": "Intone", 
                 "priority": 1
             }, 
             {
-                "id": "5b6daa6b", 
-                "name": "Alpha Tom", 
+                "id": "3a401a5b", 
+                "name": "Rancom", 
                 "priority": 2
-            }, 
-            {
-                "id": "6d802adb", 
-                "name": "Tiptax", 
-                "priority": 3
             }
         ]
     }, 
-    {
-        "id": "01c8b746", 
-        "name": "Konktam", 
+    "ef706bf9": {
+        "id": "ef706bf9", 
+        "name": "Doncof", 
         "recommendations": [
             {
-                "id": "793881d9", 
-                "name": "Sunfix", 
+                "id": "ef6fbb63", 
+                "name": "Tiptax", 
                 "priority": 0
+            }, 
+            {
+                "id": "0f580921", 
+                "name": "Softis", 
+                "priority": 1
             }
         ]
     }
-]
+}

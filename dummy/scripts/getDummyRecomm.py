@@ -24,15 +24,18 @@ def getProductList():
 
 def productIDMapper(prod_list):
     result_dict = {}
+    prod_count = 0
     for product in prod_list:
         result_dict[product] = str(uuid.uuid4())[:8]
-    return result_dict
+        prod_count += 1
+    return result_dict, prod_count
 
 if __name__ == "__main__":
 
     result = {}
     products = openJsonFile()
-    prod_dict = productIDMapper(getProductList())
+    prod_dict, prod_count = productIDMapper(getProductList())
+
 
     for product in products:
         product["id"] = prod_dict[product["name"]]
@@ -45,7 +48,8 @@ if __name__ == "__main__":
             recs["name"] = new_rec
             tmp_prod_dict.pop(new_rec, None)
             recs["id"] = prod_dict[new_rec]
+        result[product["id"]] = product
 
     with open(os.path.join(__location__, "../dummy_product_recomm.json"), "w")\
             as jsonFile:
-        jsonFile.write(json.dumps(products, indent=4, sort_keys=True))
+        jsonFile.write(json.dumps(result, indent=4, sort_keys=True))
