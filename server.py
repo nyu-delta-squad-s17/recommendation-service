@@ -71,7 +71,7 @@ def get_recommendations(id):
         recomms = data[id]['recommendations']
         rc = HTTP_200_OK
     else:
-        recomms = {'error': 'Pet with id: %s was not found' % str(id)}
+        recomms = {'error': 'Product with id: %s was not found' % str(id)}
         rc = HTTP_404_NOT_FOUND
 
     return reply(recomms, rc)
