@@ -42,7 +42,7 @@ def index():
                    ), HTTP_200_OK
 
 ######################################################################
-# LIST ALL PETS
+# LIST ALL PRODUCT RECOMMENDATIONS
 ######################################################################
 @app.route('/recommendations', methods=['GET'])
 def list_recommendations():
@@ -50,14 +50,14 @@ def list_recommendations():
     Basically prints out all the recommendations.
     """
 
-    result_dict = {}
+    message = {}
     for prod_id in data:
-        result_dict[prod_id] = {'data': [{'id': x['id'],
-                                          'name': x['name']} for x in
-                                         data[prod_id]['recommendations']],
-                                'id': prod_id,
-                                'name': data[prod_id]['name']}
-    return reply(result_dict, HTTP_200_OK)
+        message[prod_id] = {'data': [{'id': x['id'],
+                                      'name': x['name']} for x in
+                                     data[prod_id]['recommendations']],
+                            'id': prod_id,
+                            'name': data[prod_id]['name']}
+    return reply(message, HTTP_200_OK)
 
 ######################################################################
 # RETRIEVE A PET
