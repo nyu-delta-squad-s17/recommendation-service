@@ -115,11 +115,12 @@ def update_pets(id):
     return reply(message, rc)
 
 ######################################################################
-# DELETE A PET
+# DELETE A PRODUCT RECOMMENDATION
 ######################################################################
-@app.route('/pets/<int:id>', methods=['DELETE'])
+@app.route('/recommendations/<id>', methods=['DELETE'])
 def delete_pets(id):
-    del pets[id];
+    if id in data:
+        del data[id]
     return '', HTTP_204_NO_CONTENT
 
 ######################################################################
