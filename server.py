@@ -35,40 +35,47 @@ lock = Lock()
 ######################################################################
 @app.route('/')
 def index():
-    pets_url = request.base_url + "pets"
-    return jsonify(name='Pet Demo REST API Service',
-                   version='1.0',
-                   url=pets_url
+    recommendations_url = request.base_url + "recommendations"
+    return jsonify(name='Recommendations REST API Service',
+                   version='0.1',
+                   url=recommendations_url
                    ), HTTP_200_OK
 
 ######################################################################
-# LIST ALL PETS
+# LIST ALL PRODUCT RECOMMENDATIONS
 ######################################################################
-@app.route('/pets', methods=['GET'])
-def list_pets():
-    results = pets.values()
-    kind = request.args.get('kind')
-    if kind:
-        results = []
-        for key, value in pets.iteritems():
-            if value['kind'] == kind:
-                results.append(pets[key])
+@app.route('/recommendations', methods=['GET'])
+def list_recommendations():
+    """
+    Basically prints out all the recommendations.
+    """
 
-    return reply(results, HTTP_200_OK)
+    message = {}
+    for prod_id in data:
+        message[prod_id] = {'data': [{'id': x['id'],
+                                      'name': x['name']} for x in
+                                     data[prod_id]['recommendations']],
+                            'id': prod_id,
+                            'name': data[prod_id]['name']}
+    return reply(message, HTTP_200_OK)
 
 ######################################################################
 # RETRIEVE A PET
 ######################################################################
-@app.route('/pets/<int:id>', methods=['GET'])
-def get_pets(id):
-    if pets.has_key(id):
-        message = pets[id]
+@app.route('/recommendations/<id>', methods=['GET'])
+def get_recommendations(id):
+    '''
+    Given a Product ID, Output a list of it's reccommendations.
+    '''
+
+    if id in data:
+        recomms = data[id]['recommendations']
         rc = HTTP_200_OK
     else:
-        message = { 'error' : 'Pet with id: %s was not found' % str(id) }
+        recomms = {'error': 'Product with id: %s was not found' % str(id)}
         rc = HTTP_404_NOT_FOUND
 
-    return reply(message, rc)
+    return reply(recomms, rc)
 
 ######################################################################
 # ADD A NEW PET
@@ -145,8 +152,10 @@ def is_valid(data):
 #   M A I N
 ######################################################################
 if __name__ == "__main__":
-    current_pet_id = 2
-    pets = { 1: {'id': 1, 'name': 'fido', 'kind': 'dog'}, 2: {'id': 2, 'name': 'kitty', 'kind': 'cat'} }
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    dummy_json_url = os.path.join(SITE_ROOT, "dummy/",
+        "dummy_product_recomm.json")
+    data = json.load(open(dummy_json_url))
     # Pull options from environment
     debug = (os.getenv('DEBUG', 'False') == 'True')
     port = os.getenv('PORT', '5000')
