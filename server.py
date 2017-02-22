@@ -15,6 +15,7 @@
 import os
 from threading import Lock
 from flask import Flask, Response, jsonify, request, json
+import uuid
 
 # Create Flask application
 app = Flask(__name__)
@@ -74,19 +75,19 @@ def get_recommendations(id):
     else:
         recomms = {'error': 'Product with id: %s was not found' % str(id)}
         rc = HTTP_404_NOT_FOUND
-
+        
     return reply(recomms, rc)
 
 ######################################################################
-# ADD A NEW PET
+# ADD A NEW PRODUCT RECOMMENDATIONS RELATIONSHIP
 ######################################################################
-@app.route('/pets', methods=['POST'])
-def create_pets():
+@app.route('/recommendations', methods=['POST'])
+def create_recommendations():
     payload = request.get_json()
     if is_valid(payload):
-        id = next_index()
-        pets[id] = {'id': id, 'name': payload['name'], 'kind': payload['kind']}
-        message = pets[id]
+        id = new_index()
+        data[id] = {'id': id, 'name': payload['name'], 'recommendations': payload['recommendations']}
+        message = data[id]
         rc = HTTP_201_CREATED
     else:
         message = { 'error' : 'Data is not valid' }
@@ -97,6 +98,7 @@ def create_pets():
 ######################################################################
 # UPDATE AN EXISTING PET
 ######################################################################
+
 @app.route('/pets/<int:id>', methods=['PUT'])
 def update_pets(id):
     if pets.has_key(id):
@@ -126,11 +128,14 @@ def delete_recommendations(id):
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################
-def next_index():
-    global current_pet_id
+def new_index():
+    global data
     with lock:
-        current_pet_id += 1
-    return current_pet_id
+        new_id = str(uuid.uuid4())[:8]
+        if data.has_key(new_id):
+            return new_index()
+        else:
+            return new_id
 
 def reply(message, rc):
     response = Response(json.dumps(message))
@@ -142,7 +147,7 @@ def is_valid(data):
     valid = False
     try:
         name = data['name']
-        kind = data['kind']
+        recomm = data['recommendations']
         valid = True
     except KeyError as err:
         app.logger.error('Missing parameter error: %s', err)
