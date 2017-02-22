@@ -52,10 +52,11 @@ def list_recommendations():
 
     result_dict = {}
     for prod_id in data:
-        recomm_list = []
-        for recomm in data[prod_id]['recommendations']:
-            recomm_list.append(recomm['name'])
-        result_dict[data[prod_id]['name']] = recomm_list
+        result_dict[prod_id] = {'data': [{'id': x['id'],
+                                          'name': x['name']} for x in
+                                         data[prod_id]['recommendations']],
+                                'id': prod_id,
+                                'name': data[prod_id]['name']}
     return reply(result_dict, HTTP_200_OK)
 
 ######################################################################
