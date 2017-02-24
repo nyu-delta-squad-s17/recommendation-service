@@ -15,6 +15,7 @@
 import os
 from threading import Lock
 from flask import Flask, Response, jsonify, request, json
+import uuid
 
 # Create Flask application
 app = Flask(__name__)
@@ -42,7 +43,7 @@ def index():
                    ), HTTP_200_OK
 
 ######################################################################
-# LIST ALL PETS
+# LIST ALL PRODUCT RECOMMENDATIONS
 ######################################################################
 @app.route('/recommendations', methods=['GET'])
 def list_recommendations():
@@ -50,14 +51,14 @@ def list_recommendations():
     Basically prints out all the recommendations.
     """
 
-    result_dict = {}
+    message = {}
     for prod_id in data:
-        result_dict[prod_id] = {'data': [{'id': x['id'],
-                                          'name': x['name']} for x in
-                                         data[prod_id]['recommendations']],
-                                'id': prod_id,
-                                'name': data[prod_id]['name']}
-    return reply(result_dict, HTTP_200_OK)
+        message[prod_id] = {'data': [{'id': x['id'],
+                                      'name': x['name']} for x in
+                                     data[prod_id]['recommendations']],
+                            'id': prod_id,
+                            'name': data[prod_id]['name']}
+    return reply(message, HTTP_200_OK)
 
 ######################################################################
 # RETRIEVE Recommendations for a ID
@@ -78,15 +79,15 @@ def get_recommendations(id):
     return reply(message, rc)
 
 ######################################################################
-# ADD A NEW PET
+# ADD A NEW PRODUCT RECOMMENDATIONS RELATIONSHIP
 ######################################################################
-@app.route('/pets', methods=['POST'])
-def create_pets():
+@app.route('/recommendations', methods=['POST'])
+def create_recommendations():
     payload = request.get_json()
     if is_valid(payload):
-        id = next_index()
-        pets[id] = {'id': id, 'name': payload['name'], 'kind': payload['kind']}
-        message = pets[id]
+        id = new_index()
+        data[id] = {'id': id, 'name': payload['name'], 'recommendations': payload['recommendations']}
+        message = data[id]
         rc = HTTP_201_CREATED
     else:
         message = { 'error' : 'Data is not valid' }
@@ -97,6 +98,7 @@ def create_pets():
 ######################################################################
 # UPDATE AN EXISTING PET
 ######################################################################
+
 @app.route('/pets/<int:id>', methods=['PUT'])
 def update_pets(id):
     if pets.has_key(id):
@@ -115,21 +117,25 @@ def update_pets(id):
     return reply(message, rc)
 
 ######################################################################
-# DELETE A PET
+# DELETE A PRODUCT RECOMMENDATION
 ######################################################################
-@app.route('/pets/<int:id>', methods=['DELETE'])
-def delete_pets(id):
-    del pets[id];
+@app.route('/recommendations/<id>', methods=['DELETE'])
+def delete_recommendations(id):
+    if id in data:
+        del data[id]
     return '', HTTP_204_NO_CONTENT
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################
-def next_index():
-    global current_pet_id
+def new_index():
+    global data
     with lock:
-        current_pet_id += 1
-    return current_pet_id
+        new_id = str(uuid.uuid4())[:8]
+        if data.has_key(new_id):
+            return new_index()
+        else:
+            return new_id
 
 def reply(message, rc):
     response = Response(json.dumps(message))
@@ -141,7 +147,7 @@ def is_valid(data):
     valid = False
     try:
         name = data['name']
-        kind = data['kind']
+        recomm = data['recommendations']
         valid = True
     except KeyError as err:
         app.logger.error('Missing parameter error: %s', err)
