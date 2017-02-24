@@ -61,22 +61,22 @@ def list_recommendations():
     return reply(message, HTTP_200_OK)
 
 ######################################################################
-# RETRIEVE A PET
+# RETRIEVE Recommendations for a ID
 ######################################################################
 @app.route('/recommendations/<id>', methods=['GET'])
 def get_recommendations(id):
     '''
-    Given a Product ID, Output a list of it's reccommendations.
+    Given a Product ID, Output a list of its reccommendations.
     '''
 
     if id in data:
-        recomms = data[id]['recommendations']
+        message = {'data': data[id]['recommendations']}
         rc = HTTP_200_OK
     else:
-        recomms = {'error': 'Product with id: %s was not found' % str(id)}
+        message = {'error': 'Product with id: %s was not found' % str(id)}
         rc = HTTP_404_NOT_FOUND
-        
-    return reply(recomms, rc)
+
+    return reply(message, rc)
 
 ######################################################################
 # ADD A NEW PRODUCT RECOMMENDATIONS RELATIONSHIP
