@@ -1,0 +1,11 @@
+applications:
+- path: .
+  memory: 64M
+  instances: 1
+  domain: mybluemix.net
+  name: nyu-recommendation-service
+  host: nyu-recommendation-service
+  disk_quota: 1024M
+  buildpack: python_buildpack
+  services:
+  - MySQLService
