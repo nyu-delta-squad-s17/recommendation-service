@@ -36,15 +36,46 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
+
+  ######################################################################
+  # Setup a Python development environment
+  ######################################################################
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
     sudo apt-get install -y git python-pip python-dev build-essential
     sudo apt-get -y autoremove
+    # Install the Cloud Foundry CLI
+    wget -O cf-cli-installer_6.24.0_x86-64.deb 'https://cli.run.pivotal.io/stable?release=debian64&version=6.24.0&source=github-rel'
+    sudo dpkg -i cf-cli-installer_6.24.0_x86-64.deb
+    rm cf-cli-installer_6.24.0_x86-64.deb
     # Install app dependencies
     cd /vagrant
     sudo pip install -r requirements.txt
     # Make vi look nice
     echo "colorscheme desert" > ~/.vimrc
+  SHELL
+
+  ######################################################################
+  # Add MySQL docker container
+  ######################################################################
+  config.vm.provision "shell", inline: <<-SHELL
+    # Prepare MySQL data share
+    sudo mkdir -p /var/lib/mysql/data
+    sudo chown vagrant:vagrant /var/lib/mysql/data
+  SHELL
+
+  # Add MySQL docker container
+  config.vm.provision "docker" do |d|
+    d.pull_images "mysql"
+    d.run "mysql",
+      args: "--restart=always -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -h 127.0.0.1 -p 3306:3306 -v /var/lib/mysql/data:/data"
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    # Import test data
+    cd /vagrant
+    sudo docker cp recommendations.sql mysql:/recommendations.sql
+    sudo docker exec -i mysql mysql -h 127.0.0.1 -u root < recommendations.sql
   SHELL
 
 end
