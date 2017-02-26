@@ -72,16 +72,16 @@ def get_recommendations(id):
     Given a ID, Output a single row of recommendations.
     '''
 
-    message = []
+    message = {}
     results = conn.execute("SELECT * FROM recommendations WHERE id=%d" % (int(id)))
     for rec in results:
-        message.append({'id': rec[0],
-                        'parent_product_id': rec[1],
-                        'related_product_id': rec[2],
-                        'type': rec[3],
-                        'priority': rec[4]})
+        message = {"id": rec[0],
+                   "parent_product_id": rec[1],
+                   "related_product_id": rec[2],
+                   "type": rec[3],
+                   "priority": rec[4]}
     if not message:
-        message = [{'error': 'Recommendation with id: %s was not found' % str(id)}]
+        message = {'error': 'Recommendation with id: %s was not found' % str(id)}
 
     return reply(message, HTTP_200_OK)
 
