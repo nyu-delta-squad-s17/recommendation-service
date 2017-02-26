@@ -140,9 +140,9 @@ def update_recommendations(id):
 
     if validate(payload):
         conn.execute("UPDATE recommendations \
-                      SET type=\"%s\", priority=%d, \
-                      parent_product_id=%d, \
-                      related_product_id=%d WHERE id=%d"
+                      SET type=\"%s\", priority=%d \
+                      WHERE parent_product_id=%d \
+                      AND related_product_id=%d AND id=%d"
                      % (payload['type'],
                         payload['priority'],
                         payload['parent_product_id'],
