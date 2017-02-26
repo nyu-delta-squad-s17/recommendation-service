@@ -80,10 +80,12 @@ def get_recommendations(id):
                    "related_product_id": rec[2],
                    "type": rec[3],
                    "priority": rec[4]}
+        rc = HTTP_200_OK
     if not message:
         message = {'error': 'Recommendation with id: %s was not found' % str(id)}
+        rc = HTTP_404_NOT_FOUND
 
-    return reply(message, HTTP_200_OK)
+    return reply(message, rc)
 
 ######################################################################
 # ADD A NEW PRODUCT RECOMMENDATIONS RELATIONSHIP
