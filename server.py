@@ -15,6 +15,8 @@
 import os
 from threading import Lock
 from flask import Flask, Response, jsonify, request, json
+from sqlalchemy import *
+from sqlalchemy.exc import *
 import uuid
 
 # Create Flask application
@@ -50,14 +52,14 @@ def list_recommendations():
     """
     Basically prints out all the recommendations.
     """
-
-    message = {}
-    for prod_id in data:
-        message[prod_id] = {'data': [{'id': x['id'],
-                                      'name': x['name']} for x in
-                                     data[prod_id]['recommendations']],
-                            'id': prod_id,
-                            'name': data[prod_id]['name']}
+    message = []
+    results = conn.execute("select * from recommendations limit 20")
+    for rec in results:
+        message.append({'id': rec[0],
+                        'parent_product_id': rec[1],
+                        'related_product_id': rec[2],
+                        'type': rec[3],
+                        'priority': rec[4]})
     return reply(message, HTTP_200_OK)
 
 ######################################################################
@@ -155,13 +157,63 @@ def is_valid(data):
 
 
 ######################################################################
+# Connect to MySQL and catch connection exceptions
+######################################################################
+def connect_mysql(user, passwd, server, port, database):
+    engine = create_engine("mysql://%s:%s@%s:%s/%s" % (user, passwd, server, port,  database), echo = False)
+    try:
+        conn = engine.connect()
+    except OperationalError:
+        conn = None
+    return conn
+
+
+######################################################################
+# INITIALIZE MySQL
+# This method will work in the following conditions:
+#   1) In Bluemix with cleardb bound through VCAP_SERVICES
+#   2) With MySQL --linked in a Docker container in virtual machine
+######################################################################
+def inititalize_mysql():
+    global conn
+    conn = None
+    # Get the crdentials from the Bluemix environment
+    if 'VCAP_SERVICES' in os.environ:
+        print("Using VCAP_SERVICES...")
+        VCAP_SERVICES = os.environ['VCAP_SERVICES']
+        services = json.loads(VCAP_SERVICES)
+        creds = services['cleardb'][0]['credentials']
+        print("Conecting to Mysql on host %s port %s" % (creds['hostname'], creds['port']))
+        conn = connect_mysql(creds['username'], creds['password'], creds['hostname'], creds['port'], creds['name'])
+    else:
+        print("VCAP_SERVICES not found, checking localhost for MySQL")
+        conn = connect_mysql('root', '', '127.0.0.1', 3306, 'nyudevops')
+    if not conn:
+        # if you end up here, mysql instance is down.
+        print('*** FATAL ERROR: Could not connect to the MySQL Service')
+        exit(1)
+
+
+######################################################################
 #   M A I N
 ######################################################################
 if __name__ == "__main__":
+    print "Recommendations Service Starting..."
+    inititalize_mysql()
+    global current_largest_id
+    result = conn.execute("select max(id) from recommendations")
+    current_largest_id = list(result)[0][0]
+
+    #-----------------------------------------------------------------
+    # TODO!!!
+    # The following code should be removed once APIs are updated to use
+    # database connections
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     dummy_json_url = os.path.join(SITE_ROOT, "dummy/",
         "dummy_product_recomm.json")
     data = json.load(open(dummy_json_url))
+    #-----------------------------------------------------------------
+
     # Pull options from environment
     debug = (os.getenv('DEBUG', 'False') == 'True')
     port = os.getenv('PORT', '5000')

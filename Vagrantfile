@@ -42,7 +42,7 @@ Vagrant.configure(2) do |config|
   ######################################################################
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
-    sudo apt-get install -y git python-pip python-dev build-essential
+    sudo apt-get install -y git python-pip python-dev build-essential libmysqlclient-dev
     sudo apt-get -y autoremove
     # Install the Cloud Foundry CLI
     wget -O cf-cli-installer_6.24.0_x86-64.deb 'https://cli.run.pivotal.io/stable?release=debian64&version=6.24.0&source=github-rel'
