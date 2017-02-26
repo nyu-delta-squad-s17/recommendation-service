@@ -53,7 +53,8 @@ def list_recommendations():
     Basically prints out all the recommendations.
     """
     message = []
-    results = conn.execute("select * from recommendations limit 20")
+    # To mitigate query limit issues consider using session in sqlalchemy
+    results = conn.execute("select * from recommendations")
     for rec in results:
         message.append({'id': rec[0],
                         'parent_product_id': rec[1],
@@ -63,19 +64,25 @@ def list_recommendations():
     return reply(message, HTTP_200_OK)
 
 ######################################################################
-# RETRIEVE Recommendations for a ID
+# RETRIEVE Recommendations for a given recommendations ID
 ######################################################################
 @app.route('/recommendations/<id>', methods=['GET'])
 def get_recommendations(id):
     '''
-    Given a Product ID, Output a list of its reccommendations.
+    Given a ID, Output a single row of recommendations.
     '''
 
-    if id in data:
-        message = {'data': data[id]['recommendations']}
+    message = {}
+    results = conn.execute("SELECT * FROM recommendations WHERE id=%d" % (int(id)))
+    for rec in results:
+        message = {"id": rec[0],
+                   "parent_product_id": rec[1],
+                   "related_product_id": rec[2],
+                   "type": rec[3],
+                   "priority": rec[4]}
         rc = HTTP_200_OK
-    else:
-        message = {'error': 'Product with id: %s was not found' % str(id)}
+    if not message:
+        message = {'error': 'Recommendation with id: %s was not found' % str(id)}
         rc = HTTP_404_NOT_FOUND
 
     return reply(message, rc)
