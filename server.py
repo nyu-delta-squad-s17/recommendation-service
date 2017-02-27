@@ -46,6 +46,7 @@ def index():
 
 ######################################################################
 # LIST ALL PRODUCT RECOMMENDATIONS
+# CAN USE type AND product-id KEYWORDS TO QUERY THE LIST
 ######################################################################
 @app.route('/recommendations', methods=['GET'])
 def list_recommendations():
@@ -53,8 +54,21 @@ def list_recommendations():
     Basically prints out all the recommendations.
     """
     message = []
+    request_type = request.args.get('type')
+    request_product_id = request.args.get('product-id')
     # To mitigate query limit issues consider using session in sqlalchemy
-    results = conn.execute("select * from recommendations")
+    query_str = 'SELECT * FROM recommendations'
+    if request_type and request_product_id:
+        query_str += (' WHERE type=%s AND parent_product_id=%s' \
+                      % (request_type, request_product_id))
+    elif request_type:
+        query_str += (' WHERE type=%s' % request_type)
+    elif request_product_id:
+        query_str += (' WHERE parent_product_id=%s' % request_product_id)
+    try:
+        results = conn.execute(query_str)
+    except OperationalError:
+        results = []
     for rec in results:
         message.append({'id': rec[0],
                         'parent_product_id': rec[1],
