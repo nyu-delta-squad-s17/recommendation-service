@@ -149,14 +149,12 @@ def update_recommendations(id):
                         payload['related_product_id'],
                         payload['id']
                         ))
-        message = get_recommendations(id).data
-        rc = HTTP_200_OK
+        return get_recommendations(id)
 
     else:
         message = {'error': 'Invalid Request'}
         rc = HTTP_400_BAD_REQUEST
-
-    return reply(message, rc)
+        return reply(message, rc)
 
 ######################################################################
 # DELETE A PRODUCT RECOMMENDATION
@@ -180,6 +178,7 @@ def new_index():
             return new_id
 
 def reply(message, rc):
+    print "message = " + str(message);
     response = Response(json.dumps(message))
     response.headers['Content-Type'] = 'application/json'
     response.status_code = rc
