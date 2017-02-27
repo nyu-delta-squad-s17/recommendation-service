@@ -105,23 +105,56 @@ def create_recommendations():
     return reply(message, rc)
 
 ######################################################################
-# UPDATE AN EXISTING PET
+# UPDATE AN EXISTINT RECOMMENDATION RELATIONSHIP
 ######################################################################
 
-@app.route('/pets/<int:id>', methods=['PUT'])
-def update_pets(id):
-    if pets.has_key(id):
-        payload = request.get_json()
-        if is_valid(payload):
-            pets[id] = {'id': id, 'name': payload['name'], 'kind': payload['kind']}
-            message = pets[id]
-            rc = HTTP_200_OK
-        else:
-            message = { 'error' : 'Pet data was not valid' }
-            rc = HTTP_400_BAD_REQUEST
+@app.route('/recommendations/<int:id>', methods=['PUT'])
+def update_recommendations(id):
+    '''
+    Given a Recommendation ID, update all the columns as from the payload
+    '''
+
+    if get_recommendations(id).status_code == 404:
+        message = {'error': 'Recommendation with id: %s was not found' % str(id)}
+        return reply(message, HTTP_404_NOT_FOUND)
+
+    payload = json.loads(request.get_data())
+
+    def validate(data):
+        # Custom basic validation, should be refactored with is_valid
+        valid = True
+        if set(data.keys()) != set(['priority', 'related_product_id',
+                                    'parent_product_id', 'type', 'id']):
+            app.logger.error('Error: missing parameter')
+            valid = False
+
+        if id != data['id']:
+            app.logger.error('Error: id does not match')
+            valid = False
+
+        for _id in (data['related_product_id'], data['related_product_id']):
+            # Currently we cannot validate product_ID
+            pass
+
+        return valid
+
+    if validate(payload):
+        conn.execute("UPDATE recommendations \
+                      SET type=\"%s\", priority=%d \
+                      WHERE parent_product_id=%d \
+                      AND related_product_id=%d AND id=%d"
+                     % (payload['type'],
+                        payload['priority'],
+                        payload['parent_product_id'],
+                        payload['related_product_id'],
+                        payload['id']
+                        ))
+        message = get_recommendations(id).data
+        rc = HTTP_200_OK
+
     else:
-        message = { 'error' : 'Pet %s was not found' % id }
-        rc = HTTP_404_NOT_FOUND
+        message = {'error': 'Invalid Request'}
+        rc = HTTP_400_BAD_REQUEST
 
     return reply(message, rc)
 
