@@ -14,7 +14,7 @@
 
 import os
 from threading import Lock
-from flask import Flask, Response, jsonify, request, json
+from flask import Flask, Response, jsonify, request, json, render_template
 from sqlalchemy import *
 from sqlalchemy.exc import *
 import uuid
@@ -43,6 +43,40 @@ def index():
                    version='0.1',
                    url=recommendations_url
                    ), HTTP_200_OK
+
+
+@app.route('/recommendations/click_demo', methods=['GET'])
+def click_demo():
+    """
+    This is a clickable demo page that returns each row of
+    recommendations table as individual JSON objects and
+    a hyperlink to its get_recommendations(id).
+    """
+    def to_pretty_json(value):
+        return json.dumps(value, sort_keys=True,
+                          indent=2, separators=(',', ': '))
+
+    app.jinja_env.filters['tojson_pretty'] = to_pretty_json
+
+    messages = json.loads(list_recommendations().data)
+    return render_template('click_demo.html',
+                           title='recommendations',
+                           messages=messages)
+
+
+@app.route('/recommendations/<int:id>/clicked', methods=['PUT'])
+def priority_increase(id):
+    """
+    Decrements the priority of the recommendations_id until 1
+    """
+
+    conn.execute("UPDATE recommendations \
+                  SET priority= priority - 1 \
+                  WHERE id=%d \
+                  AND priority>1"
+                 % (id))
+
+    return reply(None, HTTP_200_OK)
 
 ######################################################################
 # LIST ALL PRODUCT RECOMMENDATIONS
@@ -80,7 +114,7 @@ def list_recommendations():
 ######################################################################
 # RETRIEVE Recommendations for a given recommendations ID
 ######################################################################
-@app.route('/recommendations/<id>', methods=['GET'])
+@app.route('/recommendations/<int:id>', methods=['GET'])
 def get_recommendations(id):
     '''
     Given a ID, Output a single row of recommendations.
