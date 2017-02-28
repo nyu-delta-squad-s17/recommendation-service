@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title> {{ title }} </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        function cmd(_id){
+                $.ajax({
+                    type: "PUT",
+                    url: "http://0.0.0.0:5000/recommendations/" + _id + "/clicked", 
+                    success: function (data) {
+                        $("#result").html("foo")
+                  },
+                });
+            }
+         </script>
+  </head>
+  <body>
+      <table>
+      {% for message in messages%}
+      <tr>
+          <td><pre><a href="{{ url_for('get_recommendations', id=message.id) }}"
+                      style="text-decoration:none"
+                      onclick="return cmd({{message.id}});">
+              {{ message|tojson_pretty}}</a></pre></td>
+      </tr>
+      {% endfor %}
+      </table>
+  </body>
+</html>
