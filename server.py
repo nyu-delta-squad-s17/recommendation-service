@@ -69,11 +69,14 @@ def priority_increase(id):
     Decrements the priority of the recommendations_id until 1
     """
 
-    conn.execute("UPDATE recommendations \
-                  SET priority= priority - 1 \
-                  WHERE id=%d \
-                  AND priority>1"
-                 % (id))
+    try:
+        conn.execute("UPDATE recommendations \
+                      SET priority= priority - 1 \
+                      WHERE id=%d \
+                      AND priority>1"
+                     % (id))
+    except:
+        pass
 
     return reply(None, HTTP_200_OK)
 
@@ -146,7 +149,7 @@ def create_recommendations():
             pass
         else:
             payload['type'] = ""
-            
+
         conn.execute("INSERT INTO recommendations VALUES (%s, %s, %s, \"%s\", %s)" % \
                     (id, \
                     payload['parent_product_id'], \
