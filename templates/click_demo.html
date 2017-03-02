@@ -8,20 +8,19 @@
                     type: "PUT",
                     url: "http://0.0.0.0:5000/recommendations/" + _id + "/clicked", 
                     success: function (data) {
-                        $("#result").html("foo")
+                        location.reload();
                   },
                 });
             }
-         </script>
+    </script>
   </head>
   <body>
       <table>
       {% for message in messages%}
       <tr>
-          <td><pre><a href="{{ url_for('get_recommendations', id=message.id) }}"
-                      style="text-decoration:none"
-                      onclick="return cmd({{message.id}});">
-              {{ message|tojson_pretty}}</a></pre></td>
+          <td><pre><a href="" style="text-decoration:none"
+          onclick="return cmd({{message.id}});">
+          {{ message|tojson_pretty}}</a></pre></td>
       </tr>
       {% endfor %}
       </table>
