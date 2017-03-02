@@ -17,7 +17,6 @@ from threading import Lock
 from flask import Flask, Response, jsonify, request, json
 from sqlalchemy import *
 from sqlalchemy.exc import *
-import uuid
 
 # Create Flask application
 app = Flask(__name__)
@@ -102,21 +101,30 @@ def get_recommendations(id):
     return reply(message, rc)
 
 ######################################################################
-# ADD A NEW PRODUCT RECOMMENDATIONS RELATIONSHIP
+# ADD A NEW PRODUCT RECOMMENDATION RELATIONSHIP
 ######################################################################
 @app.route('/recommendations', methods=['POST'])
 def create_recommendations():
     payload = request.get_json()
     if is_valid(payload):
-        id = new_index()
-        data[id] = {'id': id, 'name': payload['name'], 'recommendations': payload['recommendations']}
-        message = data[id]
-        rc = HTTP_201_CREATED
+        id = next_index()
+        if ('type' in payload):
+            pass
+        else:
+            payload['type'] = ""
+            
+        conn.execute("INSERT INTO recommendations VALUES (%s, %s, %s, \"%s\", %s)" % \
+                    (id, \
+                    payload['parent_product_id'], \
+                    payload['related_product_id'], \
+                    payload['type'], \
+                    payload['priority']))
+        return get_recommendations(id)
+        # rc = HTTP_201_CREATED
     else:
         message = { 'error' : 'Data is not valid' }
         rc = HTTP_400_BAD_REQUEST
-
-    return reply(message, rc)
+        return reply(message, rc)
 
 ######################################################################
 # UPDATE AN EXISTINT RECOMMENDATION RELATIONSHIP
@@ -173,23 +181,20 @@ def update_recommendations(id):
 ######################################################################
 # DELETE A PRODUCT RECOMMENDATION
 ######################################################################
-@app.route('/recommendations/<id>', methods=['DELETE'])
+@app.route('/recommendations/<int:id>', methods=['DELETE'])
 def delete_recommendations(id):
-    if id in data:
-        del data[id]
+    if get_recommendations(id).status_code == 200:
+        conn.execute("DELETE FROM recommendations WHERE id=%d" % id)
     return '', HTTP_204_NO_CONTENT
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################
-def new_index():
-    global data
+def next_index():
+    global current_largest_id
     with lock:
-        new_id = str(uuid.uuid4())[:8]
-        if data.has_key(new_id):
-            return new_index()
-        else:
-            return new_id
+        current_largest_id += 1
+    return current_largest_id
 
 def reply(message, rc):
     print "message = " + str(message);
@@ -201,8 +206,9 @@ def reply(message, rc):
 def is_valid(data):
     valid = False
     try:
-        name = data['name']
-        recomm = data['recommendations']
+        priority = data['priority']
+        related_pid = data['related_product_id']
+        parent_pid = data['parent_product_id']
         valid = True
     except KeyError as err:
         app.logger.error('Missing parameter error: %s', err)
