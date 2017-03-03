@@ -112,7 +112,7 @@ def create_recommendations():
             pass
         else:
             payload['type'] = ""
-            
+
         conn.execute("INSERT INTO recommendations VALUES (%s, %s, %s, \"%s\", %s)" % \
                     (id, \
                     payload['parent_product_id'], \
@@ -186,6 +186,24 @@ def delete_recommendations(id):
     if get_recommendations(id).status_code == 200:
         conn.execute("DELETE FROM recommendations WHERE id=%d" % id)
     return '', HTTP_204_NO_CONTENT
+
+
+@app.route('/recommendations/<int:id>/clicked', methods=['PUT'])
+def increase_priority(id):
+    """
+    Decrements the priority from low to high of the recommendations_id until 1
+    """
+
+    try:
+        conn.execute("UPDATE recommendations \
+                      SET priority= priority - 1 \
+                      WHERE id=%d \
+                      AND priority>1"
+                     % (id))
+    except:
+        pass
+
+    return reply(None, HTTP_200_OK)
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
