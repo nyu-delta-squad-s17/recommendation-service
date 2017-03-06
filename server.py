@@ -79,7 +79,7 @@ def list_recommendations():
 ######################################################################
 # RETRIEVE Recommendations for a given recommendations ID
 ######################################################################
-@app.route('/recommendations/<id>', methods=['GET'])
+@app.route('/recommendations/<int:id>', methods=['GET'])
 def get_recommendations(id):
     '''
     Given a ID, Output a single row of recommendations.
