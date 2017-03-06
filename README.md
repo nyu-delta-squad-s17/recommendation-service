@@ -32,3 +32,74 @@ When you are done, you can use `Ctrl+C` to stop the server and then exit and shu
 If the VM is no longer needed you can remove it with:
 
     $ vagrant destroy
+
+## API Resources
+  - [GET /recommendations](#get-recommendations)
+  - [GET /recommendations/[id]](#get-recommendations-id)
+  - [POST /recommendations](#post-recommendations)
+  - [PUT /recommendations/[id]](#put-recommendations-id)
+  - [DELETE /recommendations/[id]](#delete-recommendations-id)
+  - [PUT /recommendations/[id]/clicked](#put-recommendations-d)
+
+### GET /recommendations
+Example: http://0.0.0.0:5000/recommendations
+Response body:
+[
+{
+id: 1,
+parent_product_id: 3,
+priority: 66,
+related_product_id: 2,
+type: "x-sell"
+},
+{
+id: 2,
+parent_product_id: 1,
+priority: 1,
+related_product_id: 3,
+type: "up-sell"
+},
+{
+id: 3,
+parent_product_id: 2,
+priority: 4,
+related_product_id: 4,
+type: "up-sell"
+}
+]
+
+Example: http://0.0.0.0:5000/recommendations?product-id=3
+{
+"id": 1,
+"parent_product_id": 3,
+"priority": 66,
+"related_product_id": 2,
+"type": "x-sell"
+}
+
+### GET /recommendations/[id]
+Example: http://0.0.0.0:5000/recommendations/1
+Response body:
+{
+id: 1,
+parent_product_id: 3,
+priority: 66,
+related_product_id: 2,
+type: "x-sell"
+}
+
+### POST /recommendations
+Example: http://0.0.0.0:5000/recommendations
+Response body:
+
+### PUT /recommendations/[id]
+Example: http://0.0.0.0:5000/recommendations/1
+Response body:
+
+### DELETE /recommendations/[id]
+Example: http://0.0.0.0:5000/recommendations/1
+Response body:
+
+### PUT /recommendations/[id]/clicked
+Example: http://0.0.0.0:5000/recommendations/1/clicked
+Response body:
