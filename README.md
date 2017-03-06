@@ -65,7 +65,7 @@ If the VM is no longer needed you can remove it with:
     "id": 5,
     "parent_product_id": 3,
     "priority": 1,
-    "related_product_id": 2,
+    "related_product_id": 1,
     "type": "x-sell"
   }
 ]
@@ -75,7 +75,6 @@ If the VM is no longer needed you can remove it with:
 * Response Code: 200 - OK
 * Response body:
 ```json
-
 {
 "id": 1,
 "parent_product_id": 3,
@@ -84,6 +83,7 @@ If the VM is no longer needed you can remove it with:
 "type": "x-sell"
 }
 ```
+
 ### GET /recommendations/[id]
 * Example: http://0.0.0.0:5000/recommendations/1
 * Response Code: 200 - OK
@@ -98,7 +98,7 @@ If the VM is no longer needed you can remove it with:
 }
 ```
 
-### POST recommendations
+### POST /recommendations
 * Example: http://0.0.0.0:5000/recommendations
 * Payload:
 ```json
