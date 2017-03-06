@@ -35,11 +35,11 @@ If the VM is no longer needed you can remove it with:
 
 ## API Resources
   - [GET /recommendations](#get-recommendations)
-  - [GET /recommendations/[id]](#get-recommendations-id)
+  - [GET /recommendations/[id]](#get-recommendationsid)
   - [POST /recommendations](#post-recommendations)
-  - [PUT /recommendations/[id]](#put-recommendations-id)
-  - [DELETE /recommendations/[id]](#delete-recommendations-id)
-  - [PUT /recommendations/[id]/clicked](#put-recommendations-d)
+  - [PUT /recommendations/[id]](#put-recommendationsid)
+  - [DELETE /recommendations/[id]](#delete-recommendationsid)
+  - [PUT /recommendations/[id]/clicked](#put-recommendationsidclicked)
 
 ### GET /recommendations
 * Example: http://0.0.0.0:5000/recommendations
@@ -47,27 +47,27 @@ If the VM is no longer needed you can remove it with:
 * Response body:
 ```json
 [
-{
-id: 1,
-parent_product_id: 3,
-priority: 66,
-related_product_id: 2,
-type: "x-sell"
-},
-{
-id: 2,
-parent_product_id: 1,
-priority: 1,
-related_product_id: 3,
-type: "up-sell"
-},
-{
-id: 3,
-parent_product_id: 2,
-priority: 4,
-related_product_id: 4,
-type: "up-sell"
-}
+  {
+    "id": 3,
+    "parent_product_id": 2,
+    "priority": 4,
+    "related_product_id": 4,
+    "type": "up-sell"
+  },
+  {
+    "id": 4,
+    "parent_product_id": 3,
+    "priority": 1,
+    "related_product_id": 2,
+    "type": "x-sell"
+  },
+  {
+    "id": 5,
+    "parent_product_id": 3,
+    "priority": 1,
+    "related_product_id": 2,
+    "type": "x-sell"
+  }
 ]
 ```
 
@@ -90,11 +90,11 @@ type: "up-sell"
 * Response body:
 ```json
 {
-id: 1,
-parent_product_id: 3,
-priority: 66,
-related_product_id: 2,
-type: "x-sell"
+  "id": 1,
+  "parent_product_id": 3,
+  "priority": 1,
+  "related_product_id": 2,
+  "type": "x-sell"
 }
 ```
 
