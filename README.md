@@ -42,8 +42,10 @@ If the VM is no longer needed you can remove it with:
   - [PUT /recommendations/[id]/clicked](#put-recommendations-d)
 
 ### GET /recommendations
-Example: http://0.0.0.0:5000/recommendations
-Response body:
+* Example: http://0.0.0.0:5000/recommendations
+* Response Code: 200 - OK
+* Response body:
+```json
 [
 {
 id: 1,
@@ -67,8 +69,13 @@ related_product_id: 4,
 type: "up-sell"
 }
 ]
+```
 
-Example: http://0.0.0.0:5000/recommendations?product-id=3
+* Example: http://0.0.0.0:5000/recommendations?product-id=3
+* Response Code: 200 - OK
+* Response body:
+```json
+
 {
 "id": 1,
 "parent_product_id": 3,
@@ -76,10 +83,12 @@ Example: http://0.0.0.0:5000/recommendations?product-id=3
 "related_product_id": 2,
 "type": "x-sell"
 }
-
+```
 ### GET /recommendations/[id]
-Example: http://0.0.0.0:5000/recommendations/1
-Response body:
+* Example: http://0.0.0.0:5000/recommendations/1
+* Response Code: 200 - OK
+* Response body:
+```json
 {
 id: 1,
 parent_product_id: 3,
@@ -87,19 +96,52 @@ priority: 66,
 related_product_id: 2,
 type: "x-sell"
 }
+```
 
-### POST /recommendations
-Example: http://0.0.0.0:5000/recommendations
-Response body:
+### POST recommendations
+* Example: http://0.0.0.0:5000/recommendations
+* Payload:
+```json
+{"priority": 1, "related_product_id": 2, "type": "x-sell", "parent_product_id": 3}
+```
+
+* Response Code: 200 - OK
+* Response body:
+```json
+{
+"id": 5,
+"parent_product_id": 3,
+"priority": 1,
+"related_product_id": 2,
+"type": "x-sell"
+}
+```
 
 ### PUT /recommendations/[id]
-Example: http://0.0.0.0:5000/recommendations/1
-Response body:
+* Example: http://0.0.0.0:5000/recommendations/1
+* Response Code: 200 - OK
+* Payload:
+```json
+{"priority": 1, "related_product_id": 2, "type": "x-sell", "id": 1, "parent_product_id": 3}
+```
+
+* Response body:
+```json
+{
+"id": 1,
+"parent_product_id": 3,
+"priority": 1,
+"related_product_id": 2,
+"type": "x-sell"
+}
+```
 
 ### DELETE /recommendations/[id]
-Example: http://0.0.0.0:5000/recommendations/1
-Response body:
+* Example: http://0.0.0.0:5000/recommendations/1
+* Response Code: 204 NO CONTENT
+* Response body:
 
 ### PUT /recommendations/[id]/clicked
-Example: http://0.0.0.0:5000/recommendations/1/clicked
-Response body:
+* Example: http://0.0.0.0:5000/recommendations/2/clicked
+* Response Code: 200 - OK
+* Response body:
