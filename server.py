@@ -104,14 +104,10 @@ def get_recommendations(id):
 ######################################################################
 @app.route('/recommendations', methods=['POST'])
 def create_recommendations():
-    payload = request.get_json()
-    if is_valid(payload):
+    message, valid = is_valid(request.get_data())
+    if valid:
+        payload = json.loads(request.get_data())
         id = next_index()
-        if ('type' in payload):
-            pass
-        else:
-            payload['type'] = ""
-
         conn.execute("INSERT INTO recommendations VALUES (%s, %s, %s, \"%s\", %s)" % \
                     (id, \
                     payload['parent_product_id'], \
@@ -121,14 +117,13 @@ def create_recommendations():
         return get_recommendations(id)
         # rc = HTTP_201_CREATED
     else:
-        message = { 'error' : 'Data is not valid' }
+        #message = { 'error' : 'Data is not valid' }
         rc = HTTP_400_BAD_REQUEST
         return reply(message, rc)
 
 ######################################################################
 # UPDATE AN EXISTINT RECOMMENDATION RELATIONSHIP
 ######################################################################
-
 @app.route('/recommendations/<int:id>', methods=['PUT'])
 def update_recommendations(id):
     '''
@@ -137,30 +132,18 @@ def update_recommendations(id):
     if get_recommendations(id).status_code == 404:
         message = {'error': 'Recommendation with id: %s was not found' % str(id)}
         return reply(message, HTTP_404_NOT_FOUND)
-    try:
+    message, valid = is_valid(request.get_data())
+    if valid:
         payload = json.loads(request.get_data())
-    except JSONDecodeError as err:
-        message = {'error': 'JSON decoding error: %s' % err}
-        return reply(message, HTTP_400_BAD_REQUEST)
-    def validate(data):
-        # Custom basic validation, should be refactored with is_valid
-        valid = True
-        if set(data.keys()) != set(['priority', 'related_product_id',
-                                    'parent_product_id', 'type', 'id']):
-            app.logger.error('Error: missing parameter')
-            return False
-        if id != data['id']:
+        if "id" not in payload or id != payload["id"]:
             app.logger.error('Error: id does not match')
-            return False
-        for _id in (data['related_product_id'], data['related_product_id']):
-            # Currently we cannot validate product_ID
-            pass
-        return valid
-    if is_valid(payload) and validate(payload):
+            message = {'error' : 'id does not match'}
+            rc = HTTP_400_BAD_REQUEST
+            return reply(message, rc)
         conn.execute("UPDATE recommendations \
-                      SET type=\"%s\", priority=%d \
-                      WHERE parent_product_id=%d \
-                      AND related_product_id=%d AND id=%d"
+                      SET type=\"%s\", priority=%s \
+                      WHERE parent_product_id=%s \
+                      AND related_product_id=%s AND id=%s"
                      % (payload['type'],
                         payload['priority'],
                         payload['parent_product_id'],
@@ -169,7 +152,7 @@ def update_recommendations(id):
                         ))
         return get_recommendations(id)
     else:
-        message = {'error': 'Invalid Request'}
+        #message = {'error': 'Invalid Request'}
         rc = HTTP_400_BAD_REQUEST
         return reply(message, rc)
 
@@ -214,27 +197,33 @@ def reply(message, rc):
     response.status_code = rc
     return response
 
-def is_valid(data):
-    valid = False
+def is_valid(raw_data):
     try:
-        priority = data['priority']
-        related_pid = data['related_product_id']
-        parent_pid = data['parent_product_id']
-        recommendation_type = data['type']
-        valid = True
-    except KeyError as err:
-        app.logger.error('Missing parameter error: %s', err)
+        data = json.loads(raw_data)
+    except JSONDecodeError as err:
+        app.logger.error('Invalid JOSN format: %s', err)
+        message = {'error': 'JSON decoding error: %s' % err}
+        return message, False
+    if set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type']) \
+        and set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type', 'id']):
+        app.logger.error('key set does not match')
+        message = {'error': 'key set not match'}
+        return message, False
     try:
-        priority = int(priority)
-        related_pid = int(related_pid)
-        parent_pid = int(parent_pid)
+        # Not sure if we should check data type or exceptions
+        # If we check exceptions, input 1 and "1" will be treated as the same
+        priority = int(data['priority'])
+        related_pid = int(data['related_product_id'])
+        parent_pid = int(data['parent_product_id'])
     except ValueError as err:
-        valid = False
         app.logger.error('Data value error: %s', err)
+        message = {'error': 'Data value error: %s' % err}
+        return message, False
     except TypeError as err:
-        valid = False
         app.logger.error('Data type error: %s', err)
-    return valid
+        message = {'error': 'Data value error: %s' % err}
+        return message, False
+    return "", True
 
 
 ######################################################################
