@@ -207,7 +207,7 @@ def is_valid(raw_data):
     if set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type']) \
         and set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type', 'id']):
         app.logger.error('key set does not match')
-        message = {'error': 'key set not match'}
+        message = {'error': 'key set does not match'}
         return message, False
     try:
         # Not sure if we should check data type or exceptions
@@ -221,7 +221,7 @@ def is_valid(raw_data):
         return message, False
     except TypeError as err:
         app.logger.error('Data type error: %s', err)
-        message = {'error': 'Data value error: %s' % err}
+        message = {'error': 'Data type error: %s' % err}
         return message, False
     return "", True
 
