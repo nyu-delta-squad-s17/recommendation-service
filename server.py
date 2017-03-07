@@ -15,6 +15,7 @@
 import os
 from threading import Lock
 from flask import Flask, Response, jsonify, request, json
+from simplejson import JSONDecodeError
 from sqlalchemy import *
 from sqlalchemy.exc import *
 
@@ -84,7 +85,6 @@ def get_recommendations(id):
     '''
     Given a ID, Output a single row of recommendations.
     '''
-
     message = {}
     results = conn.execute("SELECT * FROM recommendations WHERE id=%d" % (int(id)))
     for rec in results:
@@ -97,7 +97,6 @@ def get_recommendations(id):
     if not message:
         message = {'error': 'Recommendation with id: %s was not found' % str(id)}
         rc = HTTP_404_NOT_FOUND
-
     return reply(message, rc)
 
 ######################################################################
@@ -105,14 +104,10 @@ def get_recommendations(id):
 ######################################################################
 @app.route('/recommendations', methods=['POST'])
 def create_recommendations():
-    payload = request.get_json()
-    if is_valid(payload):
+    message, valid = is_valid(request.get_data())
+    if valid:
+        payload = json.loads(request.get_data())
         id = next_index()
-        if ('type' in payload):
-            pass
-        else:
-            payload['type'] = ""
-
         conn.execute("INSERT INTO recommendations VALUES (%s, %s, %s, \"%s\", %s)" % \
                     (id, \
                     payload['parent_product_id'], \
@@ -122,49 +117,33 @@ def create_recommendations():
         return get_recommendations(id)
         # rc = HTTP_201_CREATED
     else:
-        message = { 'error' : 'Data is not valid' }
+        #message = { 'error' : 'Data is not valid' }
         rc = HTTP_400_BAD_REQUEST
         return reply(message, rc)
 
 ######################################################################
 # UPDATE AN EXISTINT RECOMMENDATION RELATIONSHIP
 ######################################################################
-
 @app.route('/recommendations/<int:id>', methods=['PUT'])
 def update_recommendations(id):
     '''
     Given a Recommendation ID, update all the columns as from the payload
     '''
-
     if get_recommendations(id).status_code == 404:
         message = {'error': 'Recommendation with id: %s was not found' % str(id)}
         return reply(message, HTTP_404_NOT_FOUND)
-
-    payload = json.loads(request.get_data())
-
-    def validate(data):
-        # Custom basic validation, should be refactored with is_valid
-        valid = True
-        if set(data.keys()) != set(['priority', 'related_product_id',
-                                    'parent_product_id', 'type', 'id']):
-            app.logger.error('Error: missing parameter')
-            valid = False
-
-        if id != data['id']:
+    message, valid = is_valid(request.get_data())
+    if valid:
+        payload = json.loads(request.get_data())
+        if "id" not in payload or id != payload["id"]:
             app.logger.error('Error: id does not match')
-            valid = False
-
-        for _id in (data['related_product_id'], data['related_product_id']):
-            # Currently we cannot validate product_ID
-            pass
-
-        return valid
-
-    if validate(payload):
+            message = {'error' : 'id does not match'}
+            rc = HTTP_400_BAD_REQUEST
+            return reply(message, rc)
         conn.execute("UPDATE recommendations \
-                      SET type=\"%s\", priority=%d \
-                      WHERE parent_product_id=%d \
-                      AND related_product_id=%d AND id=%d"
+                      SET type=\"%s\", priority=%s \
+                      WHERE parent_product_id=%s \
+                      AND related_product_id=%s AND id=%s"
                      % (payload['type'],
                         payload['priority'],
                         payload['parent_product_id'],
@@ -172,9 +151,8 @@ def update_recommendations(id):
                         payload['id']
                         ))
         return get_recommendations(id)
-
     else:
-        message = {'error': 'Invalid Request'}
+        #message = {'error': 'Invalid Request'}
         rc = HTTP_400_BAD_REQUEST
         return reply(message, rc)
 
@@ -193,7 +171,6 @@ def increase_priority(id):
     """
     Decrements the priority from low to high of the recommendations_id until 1
     """
-
     try:
         conn.execute("UPDATE recommendations \
                       SET priority= priority - 1 \
@@ -202,7 +179,6 @@ def increase_priority(id):
                      % (id))
     except:
         pass
-
     return reply(None, HTTP_200_OK)
 
 ######################################################################
@@ -221,16 +197,33 @@ def reply(message, rc):
     response.status_code = rc
     return response
 
-def is_valid(data):
-    valid = False
+def is_valid(raw_data):
     try:
-        priority = data['priority']
-        related_pid = data['related_product_id']
-        parent_pid = data['parent_product_id']
-        valid = True
-    except KeyError as err:
-        app.logger.error('Missing parameter error: %s', err)
-    return valid
+        data = json.loads(raw_data)
+    except JSONDecodeError as err:
+        app.logger.error('Invalid JOSN format: %s', err)
+        message = {'error': 'JSON decoding error: %s' % err}
+        return message, False
+    if set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type']) \
+        and set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type', 'id']):
+        app.logger.error('key set does not match')
+        message = {'error': 'key set does not match'}
+        return message, False
+    try:
+        # Not sure if we should check data type or exceptions
+        # If we check exceptions, input 1 and "1" will be treated as the same
+        priority = int(data['priority'])
+        related_pid = int(data['related_product_id'])
+        parent_pid = int(data['parent_product_id'])
+    except ValueError as err:
+        app.logger.error('Data value error: %s', err)
+        message = {'error': 'Data value error: %s' % err}
+        return message, False
+    except TypeError as err:
+        app.logger.error('Data type error: %s', err)
+        message = {'error': 'Data type error: %s' % err}
+        return message, False
+    return "", True
 
 
 ######################################################################
@@ -280,17 +273,6 @@ if __name__ == "__main__":
     global current_largest_id
     result = conn.execute("select max(id) from recommendations")
     current_largest_id = list(result)[0][0]
-
-    #-----------------------------------------------------------------
-    # TODO!!!
-    # The following code should be removed once APIs are updated to use
-    # database connections
-    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-    dummy_json_url = os.path.join(SITE_ROOT, "dummy/",
-        "dummy_product_recomm.json")
-    data = json.load(open(dummy_json_url))
-    #-----------------------------------------------------------------
-
     # Pull options from environment
     debug = (os.getenv('DEBUG', 'False') == 'True')
     port = os.getenv('PORT', '5000')
