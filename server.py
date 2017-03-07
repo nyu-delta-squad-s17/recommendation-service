@@ -15,7 +15,7 @@
 import os
 from threading import Lock
 from flask import Flask, Response, jsonify, request, json
-from simplejson import JSONDecodeError
+#from simplejson import JSONDecodeError
 from sqlalchemy import *
 from sqlalchemy.exc import *
 
@@ -200,9 +200,9 @@ def reply(message, rc):
 def is_valid(raw_data):
     try:
         data = json.loads(raw_data)
-    except JSONDecodeError as err:
-        app.logger.error('Invalid JOSN format: %s', err)
-        message = {'error': 'JSON decoding error: %s' % err}
+    except:
+        app.logger.error('Invalid JOSN format')
+        message = {'error': 'JSON decoding error'}
         return message, False
     if set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type']) \
         and set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type', 'id']):
