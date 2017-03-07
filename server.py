@@ -15,6 +15,7 @@
 import os
 from threading import Lock
 from flask import Flask, Response, jsonify, request, json
+from simplejson import JSONDecodeError
 from sqlalchemy import *
 from sqlalchemy.exc import *
 
@@ -84,7 +85,6 @@ def get_recommendations(id):
     '''
     Given a ID, Output a single row of recommendations.
     '''
-
     message = {}
     results = conn.execute("SELECT * FROM recommendations WHERE id=%d" % (int(id)))
     for rec in results:
@@ -97,7 +97,6 @@ def get_recommendations(id):
     if not message:
         message = {'error': 'Recommendation with id: %s was not found' % str(id)}
         rc = HTTP_404_NOT_FOUND
-
     return reply(message, rc)
 
 ######################################################################
@@ -135,32 +134,29 @@ def update_recommendations(id):
     '''
     Given a Recommendation ID, update all the columns as from the payload
     '''
-
     if get_recommendations(id).status_code == 404:
         message = {'error': 'Recommendation with id: %s was not found' % str(id)}
         return reply(message, HTTP_404_NOT_FOUND)
-
-    payload = json.loads(request.get_data())
-
+    try:
+        payload = json.loads(request.get_data())
+    except JSONDecodeError as err:
+        message = {'error': 'JSON decoding error: %s' % err}
+        return reply(message, HTTP_400_BAD_REQUEST)
     def validate(data):
         # Custom basic validation, should be refactored with is_valid
         valid = True
         if set(data.keys()) != set(['priority', 'related_product_id',
                                     'parent_product_id', 'type', 'id']):
             app.logger.error('Error: missing parameter')
-            valid = False
-
+            return False
         if id != data['id']:
             app.logger.error('Error: id does not match')
-            valid = False
-
+            return False
         for _id in (data['related_product_id'], data['related_product_id']):
             # Currently we cannot validate product_ID
             pass
-
         return valid
-
-    if validate(payload):
+    if is_valid(payload) and validate(payload):
         conn.execute("UPDATE recommendations \
                       SET type=\"%s\", priority=%d \
                       WHERE parent_product_id=%d \
@@ -172,7 +168,6 @@ def update_recommendations(id):
                         payload['id']
                         ))
         return get_recommendations(id)
-
     else:
         message = {'error': 'Invalid Request'}
         rc = HTTP_400_BAD_REQUEST
@@ -193,7 +188,6 @@ def increase_priority(id):
     """
     Decrements the priority from low to high of the recommendations_id until 1
     """
-
     try:
         conn.execute("UPDATE recommendations \
                       SET priority= priority - 1 \
@@ -202,7 +196,6 @@ def increase_priority(id):
                      % (id))
     except:
         pass
-
     return reply(None, HTTP_200_OK)
 
 ######################################################################
@@ -227,9 +220,20 @@ def is_valid(data):
         priority = data['priority']
         related_pid = data['related_product_id']
         parent_pid = data['parent_product_id']
+        recommendation_type = data['type']
         valid = True
     except KeyError as err:
         app.logger.error('Missing parameter error: %s', err)
+    try:
+        priority = int(priority)
+        related_pid = int(related_pid)
+        parent_pid = int(parent_pid)
+    except ValueError as err:
+        valid = False
+        app.logger.error('Data value error: %s', err)
+    except TypeError as err:
+        valid = False
+        app.logger.error('Data type error: %s', err)
     return valid
 
 
@@ -280,17 +284,6 @@ if __name__ == "__main__":
     global current_largest_id
     result = conn.execute("select max(id) from recommendations")
     current_largest_id = list(result)[0][0]
-
-    #-----------------------------------------------------------------
-    # TODO!!!
-    # The following code should be removed once APIs are updated to use
-    # database connections
-    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-    dummy_json_url = os.path.join(SITE_ROOT, "dummy/",
-        "dummy_product_recomm.json")
-    data = json.load(open(dummy_json_url))
-    #-----------------------------------------------------------------
-
     # Pull options from environment
     debug = (os.getenv('DEBUG', 'False') == 'True')
     port = os.getenv('PORT', '5000')
