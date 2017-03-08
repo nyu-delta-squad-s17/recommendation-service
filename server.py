@@ -114,12 +114,19 @@ def create_recommendations():
                     payload['related_product_id'], \
                     payload['type'], \
                     payload['priority']))
-        return get_recommendations(id)
-        # rc = HTTP_201_CREATED
+        message = {}
+        results = conn.execute("SELECT * FROM recommendations WHERE id=%d" % (int(id)))
+        for rec in results:
+            message = {"id": rec[0],
+                       "parent_product_id": rec[1],
+                       "related_product_id": rec[2],
+                       "type": rec[3],
+                       "priority": rec[4]}
+        rc = HTTP_201_CREATED
     else:
         #message = { 'error' : 'Data is not valid' }
         rc = HTTP_400_BAD_REQUEST
-        return reply(message, rc)
+    return reply(message, rc)
 
 ######################################################################
 # UPDATE AN EXISTINT RECOMMENDATION RELATIONSHIP
@@ -204,8 +211,7 @@ def is_valid(raw_data):
         app.logger.error('Invalid JOSN format')
         message = {'error': 'JSON decoding error'}
         return message, False
-    if set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type']) \
-        and set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type', 'id']):
+    if set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type']):
         app.logger.error('key set does not match')
         message = {'error': 'key set does not match'}
         return message, False
