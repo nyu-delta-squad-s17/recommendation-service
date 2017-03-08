@@ -105,7 +105,7 @@ If the VM is no longer needed you can remove it with:
 {"priority": 1, "related_product_id": 2, "type": "x-sell", "parent_product_id": 3}
 ```
 
-* Response Code: 201 - OK
+* Response Code: 201 - CREATED
 * Response body:
 ```json
 {
