@@ -85,15 +85,8 @@ def get_recommendations(id):
     '''
     Given a ID, Output a single row of recommendations.
     '''
-    message = {}
-    results = conn.execute("SELECT * FROM recommendations WHERE id=%d" % (int(id)))
-    for rec in results:
-        message = {"id": rec[0],
-                   "parent_product_id": rec[1],
-                   "related_product_id": rec[2],
-                   "type": rec[3],
-                   "priority": rec[4]}
-        rc = HTTP_200_OK
+    message = retrieve_by_id(id)
+    rc = HTTP_200_OK
     if not message:
         message = {'error': 'Recommendation with id: %s was not found' % str(id)}
         rc = HTTP_404_NOT_FOUND
@@ -114,17 +107,10 @@ def create_recommendations():
                     payload['related_product_id'], \
                     payload['type'], \
                     payload['priority']))
-        message = {}
-        results = conn.execute("SELECT * FROM recommendations WHERE id=%d" % (int(id)))
-        for rec in results:
-            message = {"id": rec[0],
-                       "parent_product_id": rec[1],
-                       "related_product_id": rec[2],
-                       "type": rec[3],
-                       "priority": rec[4]}
+        message = retrieve_by_id(id)
         rc = HTTP_201_CREATED
     else:
-        #message = { 'error' : 'Data is not valid' }
+        # message = { 'error' : 'Data is not valid' }
         rc = HTTP_400_BAD_REQUEST
     return reply(message, rc)
 
@@ -230,6 +216,17 @@ def is_valid(raw_data):
         message = {'error': 'Data type error: %s' % err}
         return message, False
     return "", True
+
+def retrieve_by_id(id):
+    message = {}
+    results = conn.execute("SELECT * FROM recommendations WHERE id=%d" % (int(id)))
+    for rec in results:
+        message = {"id": rec[0],
+                   "parent_product_id": rec[1],
+                   "related_product_id": rec[2],
+                   "type": rec[3],
+                   "priority": rec[4]}
+    return message
 
 
 ######################################################################
