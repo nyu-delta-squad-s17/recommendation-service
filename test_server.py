@@ -18,6 +18,13 @@ HTTP_409_CONFLICT = status.HTTP_409_CONFLICT
 #  T E S T   C A S E S
 ######################################################################
 class TestRecommendationServer(unittest.TestCase):
+    @classmethod
+    def setUpClass(self):
+        server.inititalize_mysql()
+
+    @classmethod
+    def tearDownClass(self):
+        server.conn.close()
 
     def setUp(self):
         server.app.debug = True
