@@ -70,7 +70,7 @@ class TestRecommendationServer(unittest.TestCase):
             self.assertTrue(data_point["type"] == "up-sell",
                             msg=data_point["type"])
 
-        # non existent type
+    def test_get_recommendation_by_non_existent_type(self):
         resp = self.app.get('/recommendations?type=foo')
         self.assertTrue(resp.status_code == HTTP_200_OK)
         data = json.loads(resp.data)
@@ -85,7 +85,7 @@ class TestRecommendationServer(unittest.TestCase):
         test_result = all(data_point["parent_product_id"] == 1 for data_point in data)
         self.assertTrue(test_result)
 
-        # non-existent id
+    def test_get_recommendation_by_non_existent_parent_id(self):
         resp = self.app.get('/recommendations?product-id=foo')
         data = json.loads(resp.data)
         self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
@@ -100,16 +100,19 @@ class TestRecommendationServer(unittest.TestCase):
         self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
         self.assertFalse(data)
 
+    def test_get_recommendation_by_type_and_non_existent_parent_id(self):
         resp = self.app.get('/recommendations?product-id=foo&type=up-sell')
         data = json.loads(resp.data)
         self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
         self.assertFalse(data)
 
+    def test_get_recommendation_by_parent_id_and_non_existent_type(self):
         resp = self.app.get('/recommendations?product-id=1&type=bar')
         data = json.loads(resp.data)
         self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
         self.assertFalse(data)
 
+    def test_get_recommendation_by_non_existent_parent_id_and_non_existent_type(self):
         resp = self.app.get('/recommendations?product-id=foo&type=bar')
         data = json.loads(resp.data)
         self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
