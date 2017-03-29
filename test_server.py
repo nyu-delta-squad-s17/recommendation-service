@@ -51,6 +51,19 @@ class TestRecommendationServer(unittest.TestCase):
         resp = self.app.get('/recommendations/0')
         self.assertEqual( resp.status_code, HTTP_404_NOT_FOUND )
 
+    def test_delete_recommendation_pass(self):
+        # save the current number of recommendations for later comparison
+        recommendation_count = self.get_recommendation_count()
+        # delete a recommendation that doesn't exist
+        resp = self.app.delete('/recommendations/1', content_type='application/json')
+        self.assertTrue( resp.status_code == HTTP_204_NO_CONTENT )
+        self.assertTrue( len(resp.data) == 0 )
+        new_count = self.get_recommendation_count()
+        self.assertTrue ( new_count == recommendation_count - 1)
+
+    def test_delete_recommendation_fail(self):
+        resp = self.app.delete('/recommendations/0', content_type='application/json')
+        self.assertTrue( resp.status_code == HTTP_400_BAD_REQUEST )
 
 ######################################################################
 # Utility functions

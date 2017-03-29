@@ -156,7 +156,9 @@ def update_recommendations(id):
 def delete_recommendations(id):
     if get_recommendations(id).status_code == 200:
         conn.execute("DELETE FROM recommendations WHERE id=%d" % id)
-    return '', HTTP_204_NO_CONTENT
+        return '', HTTP_204_NO_CONTENT
+    else:
+        return '', HTTP_400_BAD_REQUEST
 
 
 @app.route('/recommendations/<int:id>/clicked', methods=['PUT'])
