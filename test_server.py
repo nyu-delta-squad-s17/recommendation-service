@@ -55,7 +55,7 @@ class TestRecommendationServer(unittest.TestCase):
         # save the current number of recommendations for later comparison
         recommendation_count = self.get_recommendation_count()
         # delete a recommendation that doesn't exist
-        resp = self.app.delete('/recommendations/1', content_type='application/json')
+        resp = self.app.delete('/recommendations/2', content_type='application/json')
         self.assertTrue( resp.status_code == HTTP_204_NO_CONTENT )
         self.assertTrue( len(resp.data) == 0 )
         new_count = self.get_recommendation_count()
