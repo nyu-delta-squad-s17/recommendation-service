@@ -184,7 +184,7 @@ def next_index():
     return current_largest_id
 
 def reply(message, rc):
-    print "message = " + str(message);
+    # print "message = " + str(message);
     response = Response(json.dumps(message))
     response.headers['Content-Type'] = 'application/json'
     response.status_code = rc
