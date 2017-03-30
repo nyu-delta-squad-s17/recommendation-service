@@ -74,6 +74,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     # Import test data
     cd /vagrant
+    sleep 30
     sudo docker cp recommendations.sql mysql:/recommendations.sql
     sudo docker exec -i mysql mysql -h 127.0.0.1 -u root < recommendations.sql
   SHELL
