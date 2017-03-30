@@ -21,7 +21,8 @@ HTTP_409_CONFLICT = status.HTTP_409_CONFLICT
 class TestRecommendationServer(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        server.inititalize_mysql()
+        server.initialize_testmysql()
+        server.conn.execute("INSERT INTO `recommendations` VALUES (1,1,2,'x-sell',5),(2,1,3,'up-sell',5),(3,2,4,'up-sell',5)")
 
     @classmethod
     def tearDownClass(self):
