@@ -233,7 +233,7 @@ def retrieve_by_id(id):
 # Connect to MySQL and catch connection exceptions
 ######################################################################
 def connect_mysql(user, passwd, server, port, database):
-    engine = create_engine("mysql://%s:%s@%s:%s/%s" % (user, passwd, server, port,  database), echo = False)
+    engine = create_engine("mysql://%s:%s@%s:%s/%s" % (user, passwd, server, port, database), echo = False)
     try:
         conn = engine.connect()
     except OperationalError:
@@ -266,6 +266,27 @@ def inititalize_mysql():
         print('*** FATAL ERROR: Could not connect to the MySQL Service')
         exit(1)
 
+def initialize_testmysql():
+    global conn
+    engine = create_engine("mysql://%s:%s@%s:%s/%s" % ('root', '', '127.0.0.1', 3306, 'tdd'), echo = False)
+    meta = MetaData()
+    recommendations = Table('recommendations', meta,
+        Column('id', Integer, nullable=False, primary_key=True),
+        Column('parent_product_id', Integer, nullable=False),
+        Column('related_product_id', Integer, nullable=False),
+        Column('type', String(20), nullable=False),
+        Column('priority', Integer, nullable=True)
+    )
+    try:
+        recommendations.drop(engine, checkfirst=True)
+    except:
+        pass
+    recommendations.create(engine, checkfirst=True)
+    conn = engine.connect()
+    if not conn:
+        # if you end up here, mysql instance is down.
+        print('*** FATAL ERROR: Could not connect to the MySQL Service')
+        exit(1)
 
 ######################################################################
 #   M A I N
