@@ -23,6 +23,7 @@ class TestRecommendationServer(unittest.TestCase):
     def setUpClass(self):
         server.initialize_testmysql()
         server.conn.execute("INSERT INTO `recommendations` VALUES (1,1,2,'x-sell',5),(2,1,3,'up-sell',5),(3,2,4,'up-sell',5)")
+        server.initialize_index()
 
     @classmethod
     def tearDownClass(self):
@@ -118,9 +119,8 @@ class TestRecommendationServer(unittest.TestCase):
         data = json.loads(resp.data)
         self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
         self.assertFalse(data)
-        
+
     def test_create_recommendation(self):
-        server.initializeIndex()
         recommendation_count = self.get_recommendation_count()
         new_recommendation = {'parent_product_id': '2', 'priority': '5', 'related_product_id':'2', 'type': 'x-sell'}
         data = json.dumps(new_recommendation)
