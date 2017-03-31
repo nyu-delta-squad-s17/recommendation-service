@@ -288,15 +288,18 @@ def initialize_testmysql():
         print('*** FATAL ERROR: Could not connect to the MySQL Service')
         exit(1)
 
+def initializeIndex():
+    global current_largest_id
+    result = conn.execute("select max(id) from recommendations")
+    current_largest_id = list(result)[0][0]
+
 ######################################################################
 #   M A I N
 ######################################################################
 if __name__ == "__main__":
     print "Recommendations Service Starting..."
     inititalize_mysql()
-    global current_largest_id
-    result = conn.execute("select max(id) from recommendations")
-    current_largest_id = list(result)[0][0]
+    initializeIndex()
     # Pull options from environment
     debug = (os.getenv('DEBUG', 'False') == 'True')
     port = os.getenv('PORT', '5000')
