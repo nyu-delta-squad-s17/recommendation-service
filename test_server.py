@@ -2,6 +2,7 @@
 # python -m unittest discover
 
 import unittest
+import logging
 import json
 import server
 from flask_api import status    # HTTP Status Codes
@@ -20,7 +21,8 @@ HTTP_409_CONFLICT = status.HTTP_409_CONFLICT
 class TestRecommendationServer(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        server.inititalize_mysql()
+        server.initialize_testmysql()
+        server.conn.execute("INSERT INTO `recommendations` VALUES (1,1,2,'x-sell',5),(2,1,3,'up-sell',5),(3,2,4,'up-sell',5)")
 
     @classmethod
     def tearDownClass(self):
@@ -55,16 +57,31 @@ class TestRecommendationServer(unittest.TestCase):
         # save the current number of recommendations for later comparison
         recommendation_count = self.get_recommendation_count()
         # delete a recommendation that doesn't exist
-        resp = self.app.delete('/recommendations/2', content_type='application/json')
+        resp = self.app.delete('/recommendations/1', content_type='application/json')
         self.assertTrue( resp.status_code == HTTP_204_NO_CONTENT )
         self.assertTrue( len(resp.data) == 0 )
         new_count = self.get_recommendation_count()
         self.assertTrue ( new_count == recommendation_count - 1)
 
     def test_delete_recommendation_fail(self):
-        resp = self.app.delete('/recommendations/0', content_type='application/json')
-        self.assertTrue( resp.status_code == HTTP_400_BAD_REQUEST )
+        resp_get = self.app.get('/recommendations/2')
+        self.assertTrue ( resp_get.status_code == HTTP_200_OK )
+        resp_delete = self.app.delete('/recommendations/2', content_type='application/json')
+        self.assertTrue( resp.status_code == HTTP_204_NO_CONTENT )
+        resp_get_deleted = self.app.get('recommendations/2')
+        self.assertTrue ( resp_get_deleted.status_code == HTTP_404_NOT_FOUND )
+        
+    def test_get_recommendation_by_type(self):
+        log = logging.getLogger("Test GET recommendations by type")
+        resp = self.app.get('/recommendations?type=x-sell')
+        self.assertTrue(resp.status_code == HTTP_200_OK)
+        data = json.loads(resp.data)
+        for data_point in data:
+            log.debug(data_point)
+            self.assertTrue(data_point["type"] == "x-sell",
+                            msg=data_point["type"])
 
+<<<<<<< HEAD
     def test_clicked_recommendation_pass(self):
         recommendation_priority = self.get_recommendation_priority
         resp = self.app.put('/recommendations/1/clicked', content_type='application/json')
@@ -78,6 +95,65 @@ class TestRecommendationServer(unittest.TestCase):
 
 
 ######################################################################
+=======
+        resp = self.app.get('/recommendations?type=up-sell')
+        self.assertTrue(resp.status_code == HTTP_200_OK)
+        data = json.loads(resp.data)
+        for data_point in data:
+            log.debug(data_point)
+            self.assertTrue(data_point["type"] == "up-sell",
+                            msg=data_point["type"])
+
+    def test_get_recommendation_by_non_existent_type(self):
+        resp = self.app.get('/recommendations?type=foo')
+        self.assertTrue(resp.status_code == HTTP_200_OK)
+        data = json.loads(resp.data)
+        self.assertFalse(data)
+
+    def test_get_recommendation_by_parent_id(self):
+        log = logging.getLogger("Test GET recommendations by parent_product_id")
+
+        resp = self.app.get('/recommendations?product-id=1')
+        data = json.loads(resp.data)
+        self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
+        test_result = all(data_point["parent_product_id"] == 1 for data_point in data)
+        self.assertTrue(test_result)
+
+    def test_get_recommendation_by_non_existent_parent_id(self):
+        resp = self.app.get('/recommendations?product-id=foo')
+        data = json.loads(resp.data)
+        self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
+        self.assertFalse(data)
+
+    def test_get_recommendation_by_type_and_parent_id(self):
+        log = logging.getLogger("Test GET recommendations by parent_product_id and type")
+        log.warning("result with spaces between queries are errorneous.")
+
+        resp = self.app.get('/recommendations?product-id=1&type=up-sell')
+        data = json.loads(resp.data)
+        self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
+        self.assertFalse(data)
+
+    def test_get_recommendation_by_type_and_non_existent_parent_id(self):
+        resp = self.app.get('/recommendations?product-id=foo&type=up-sell')
+        data = json.loads(resp.data)
+        self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
+        self.assertFalse(data)
+
+    def test_get_recommendation_by_parent_id_and_non_existent_type(self):
+        resp = self.app.get('/recommendations?product-id=1&type=bar')
+        data = json.loads(resp.data)
+        self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
+        self.assertFalse(data)
+
+    def test_get_recommendation_by_non_existent_parent_id_and_non_existent_type(self):
+        resp = self.app.get('/recommendations?product-id=foo&type=bar')
+        data = json.loads(resp.data)
+        self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
+        self.assertFalse(data)
+
+#######e##############################################################
+>>>>>>> 0ef81c4e0166b45ce0948961926c8ace286b81db
 # Utility functions
 ######################################################################
 
