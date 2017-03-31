@@ -55,7 +55,7 @@ class TestRecommendationServer(unittest.TestCase):
         # save the current number of recommendations for later comparison
         recommendation_count = self.get_recommendation_count()
         # delete a recommendation that doesn't exist
-        resp = self.app.delete('/recommendations/1', content_type='application/json')
+        resp = self.app.delete('/recommendations/2', content_type='application/json')
         self.assertTrue( resp.status_code == HTTP_204_NO_CONTENT )
         self.assertTrue( len(resp.data) == 0 )
         new_count = self.get_recommendation_count()
@@ -65,6 +65,18 @@ class TestRecommendationServer(unittest.TestCase):
         resp = self.app.delete('/recommendations/0', content_type='application/json')
         self.assertTrue( resp.status_code == HTTP_400_BAD_REQUEST )
 
+    def test_clicked_recommendation_pass(self):
+        recommendation_priority = self.get_recommendation_priority
+        resp = self.app.put('/recommendations/1/clicked', content_type='application/json')
+        self.assertTrue( resp.status_code == HTTP_200_OK )
+        data = json.loads(resp.data)
+        new_priority = data['priority']
+        if (recommendations_priority == 1):
+            self.assertTrue( new_priority == recommendation_priority )
+        else: 
+            self.assertTrue( new_priority == recommendation_priority - 1 )
+
+
 ######################################################################
 # Utility functions
 ######################################################################
@@ -73,9 +85,15 @@ class TestRecommendationServer(unittest.TestCase):
         # save the current number of pets
         resp = self.app.get('/recommendations')
         self.assertTrue( resp.status_code == HTTP_200_OK )
-        # print 'resp_data: ' + resp.data
         data = json.loads(resp.data)
         return len(data)
+
+    def get_recommendation_priority(self):
+        # save the current number of pets
+        resp = self.app.get('/recommendations')
+        self.assertTrue( resp.status_code == HTTP_200_OK )
+        data = json.loads(resp.data)
+        return data['priority']
 
 
 ######################################################################
