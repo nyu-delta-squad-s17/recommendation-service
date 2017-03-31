@@ -118,6 +118,24 @@ class TestRecommendationServer(unittest.TestCase):
         data = json.loads(resp.data)
         self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
         self.assertFalse(data)
+    def test_create_recommendation(self):
+        recommendation_count = self.get_recommendation_count()
+        new_recommendation = {'parent_product_id': '2', 'priority': '5', 'related_product_id':'2', 'type': 'x-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.post('/recommendations', data=data, content_type='application/json')
+        self.assertEqual( resp.status_code, status.HTTP_201_CREATED )
+        location = resp.headers.get('Location', None)
+        self.assertTrue( location != None)
+        new_json = json.loads(resp.data)
+        self.assertEqual (new_json['parent_product_id'], '2')
+        self.assertEqual (new_json['priority'], '5')
+        self.assertEqual (new_json['related_product_id'], '2')
+        self.assertEqual (new_json['type'], 'x-sell')
+        resp = self.app.get('/recommendations')
+        data = json.loads(resp.data)
+        self.assertEqual( resp.status_code, status.HTTP_200_OK )
+        self.assertEqual( len(data), recommendation_count + 1 )
+        self.assertIn( new_json, data )
 
 #######e##############################################################
 # Utility functions
