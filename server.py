@@ -158,7 +158,6 @@ def delete_recommendations(id):
         conn.execute("DELETE FROM recommendations WHERE id=%d" % id)
     return '', HTTP_204_NO_CONTENT
 
-
 @app.route('/recommendations/<int:id>/clicked', methods=['PUT'])
 def increase_priority(id):
     """
