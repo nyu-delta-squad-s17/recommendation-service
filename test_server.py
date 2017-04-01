@@ -39,15 +39,14 @@ class TestRecommendationServer(unittest.TestCase):
 
     def test_get_recommendation_list(self):
         resp = self.app.get('/recommendations')
-        #print 'resp_data: ' + resp.data
         self.assertTrue( resp.status_code == HTTP_200_OK )
         self.assertTrue( len(resp.data) > 0 )
 
     def test_get_recommendation(self):
-        resp = self.app.get('/recommendations/1')
+        resp = self.app.get('/recommendations/3')
         self.assertEqual( resp.status_code, HTTP_200_OK )
         data = json.loads(resp.data)
-        self.assertEqual (data['parent_product_id'], 1)
+        self.assertEqual (data['parent_product_id'], 2)
 
     def test_get_recommendation_not_found(self):
         resp = self.app.get('/recommendations/0')
@@ -67,7 +66,7 @@ class TestRecommendationServer(unittest.TestCase):
         resp_get = self.app.get('/recommendations/2')
         self.assertTrue ( resp_get.status_code == HTTP_200_OK )
         resp_delete = self.app.delete('/recommendations/2', content_type='application/json')
-        self.assertTrue( resp.status_code == HTTP_204_NO_CONTENT )
+        self.assertTrue( resp_delete.status_code == HTTP_204_NO_CONTENT )
         resp_get_deleted = self.app.get('recommendations/2')
         self.assertTrue ( resp_get_deleted.status_code == HTTP_404_NOT_FOUND )
         
@@ -81,28 +80,28 @@ class TestRecommendationServer(unittest.TestCase):
             self.assertTrue(data_point["type"] == "x-sell",
                             msg=data_point["type"])
 
-<<<<<<< HEAD
     def test_clicked_recommendation_pass(self):
-        recommendation_priority = self.get_recommendation_priority
-        resp = self.app.put('/recommendations/1/clicked', content_type='application/json')
+        resp = self.app.get('/recommendations/3')
+        data = json.loads(resp.data)
+        old_priority = data['priority']
+        resp = self.app.put('/recommendations/3/clicked', content_type='application/json')
         self.assertTrue( resp.status_code == HTTP_200_OK )
+        resp = self.app.get('/recommendations/3')
         data = json.loads(resp.data)
         new_priority = data['priority']
-        if (recommendations_priority == 1):
-            self.assertTrue( new_priority == recommendation_priority )
+        if (old_priority == 1):
+            self.assertTrue( new_priority == old_priority )
         else: 
-            self.assertTrue( new_priority == recommendation_priority - 1 )
+            self.assertTrue( new_priority == old_priority - 1 )
 
-
-######################################################################
-=======
-        resp = self.app.get('/recommendations?type=up-sell')
-        self.assertTrue(resp.status_code == HTTP_200_OK)
-        data = json.loads(resp.data)
-        for data_point in data:
-            log.debug(data_point)
-            self.assertTrue(data_point["type"] == "up-sell",
-                            msg=data_point["type"])
+        # This is someone's code that is getting lost in a merge
+        # resp = self.app.get('/recommendations?type=up-sell')
+        # self.assertTrue(resp.status_code == HTTP_200_OK)
+        # data = json.loads(resp.data)
+        # for data_point in data:
+        #     log.debug(data_point)
+        #     self.assertTrue(data_point["type"] == "up-sell",
+        #                     msg=data_point["type"])
 
     def test_get_recommendation_by_non_existent_type(self):
         resp = self.app.get('/recommendations?type=foo')
@@ -152,25 +151,16 @@ class TestRecommendationServer(unittest.TestCase):
         self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
         self.assertFalse(data)
 
-#######e##############################################################
->>>>>>> 0ef81c4e0166b45ce0948961926c8ace286b81db
+######################################################################
 # Utility functions
 ######################################################################
 
     def get_recommendation_count(self):
-        # save the current number of pets
+        # save the current number of recommendations
         resp = self.app.get('/recommendations')
         self.assertTrue( resp.status_code == HTTP_200_OK )
         data = json.loads(resp.data)
         return len(data)
-
-    def get_recommendation_priority(self):
-        # save the current number of pets
-        resp = self.app.get('/recommendations')
-        self.assertTrue( resp.status_code == HTTP_200_OK )
-        data = json.loads(resp.data)
-        return data['priority']
-
 
 ######################################################################
 #   M A I N
