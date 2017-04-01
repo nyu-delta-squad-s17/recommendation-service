@@ -23,6 +23,7 @@ class TestRecommendationServer(unittest.TestCase):
     def setUpClass(self):
         server.initialize_testmysql()
         server.conn.execute("INSERT INTO `recommendations` VALUES (1,1,2,'x-sell',5),(2,1,3,'up-sell',5),(3,2,4,'up-sell',5)")
+        server.initialize_index()
 
     @classmethod
     def tearDownClass(self):
@@ -151,6 +152,82 @@ class TestRecommendationServer(unittest.TestCase):
         self.assertTrue(resp.status_code == HTTP_200_OK, msg=data)
         self.assertFalse(data)
 
+    def test_create_recommendation(self):
+        recommendation_count = self.get_recommendation_count()
+        new_recommendation = {'parent_product_id': '2', 'priority': '5', 'related_product_id':'2', 'type': 'x-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.post('/recommendations', data=data, content_type='application/json')
+        self.assertTrue( resp.status_code == status.HTTP_201_CREATED )
+        new_json = json.loads(resp.data)
+        self.assertEqual (new_json['parent_product_id'], 2)
+        self.assertEqual (new_json['priority'], 5)
+        self.assertEqual (new_json['related_product_id'], 2)
+        self.assertEqual (new_json['type'], 'x-sell')
+        resp = self.app.get('/recommendations')
+        data = json.loads(resp.data)
+        self.assertEqual( resp.status_code, status.HTTP_200_OK )
+        self.assertEqual( len(data), recommendation_count + 1 )
+        self.assertIn( new_json, data )
+
+    def test_create_pet_with_no_data(self):
+        resp = self.app.post('/recommendations', content_type='application/json')
+        data = json.loads(resp.data)
+        self.assertTrue( resp.status_code == HTTP_400_BAD_REQUEST )
+
+    def test_create_pet_with_no_parent_product_id(self):
+        new_recommendation = {'priority': '5', 'related_product_id':'2', 'type': 'x-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.post('/recommendations', data=data, content_type='application/json')
+        self.assertEqual( resp.status_code, status.HTTP_400_BAD_REQUEST )
+
+    def test_create_pet_with_no_related_product_id(self):
+        new_recommendation = {'parent_product_id': '2', 'priority': '5', 'type': 'x-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.post('/recommendations', data=data, content_type='application/json')
+        self.assertEqual( resp.status_code, status.HTTP_400_BAD_REQUEST )
+
+    def test_create_pet_with_no_priority(self):
+        new_recommendation = {'parent_product_id': '2', 'related_product_id':'2', 'type': 'x-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.post('/recommendations', data=data, content_type='application/json')
+        self.assertEqual( resp.status_code, status.HTTP_400_BAD_REQUEST )
+
+    def test_create_pet_with_no_type(self):
+        new_recommendation = {'parent_product_id': '2', 'priority': '5', 'related_product_id':'2'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.post('/recommendations', data=data, content_type='application/json')
+        self.assertEqual( resp.status_code, status.HTTP_400_BAD_REQUEST )
+
+    def test_create_pet_with_no_parent_product_id_and_related_product_id(self):
+        new_recommendation = {'priority': '5', 'type': 'x-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.post('/recommendations', data=data, content_type='application/json')
+        self.assertEqual( resp.status_code, status.HTTP_400_BAD_REQUEST )
+
+    def test_create_pet_with_no_parent_product_id_and_priority(self):
+        new_recommendation = {'related_product_id':'2', 'type': 'x-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.post('/recommendations', data=data, content_type='application/json')
+        self.assertEqual( resp.status_code, status.HTTP_400_BAD_REQUEST )
+
+    def test_create_pet_with_no_priority_and_related_product_id(self):
+        new_recommendation = {'parent_product_id': '2', 'type': 'x-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.post('/recommendations', data=data, content_type='application/json')
+        self.assertEqual( resp.status_code, status.HTTP_400_BAD_REQUEST )
+
+    def test_create_pet_with_no_priority_and_type(self):
+        new_recommendation = {'parent_product_id': '2', 'related_product_id':'2'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.post('/recommendations', data=data, content_type='application/json')
+        self.assertEqual( resp.status_code, status.HTTP_400_BAD_REQUEST )
+
+    def test_create_pet_with_no_related_product_id_and_type(self):
+        new_recommendation = {'parent_product_id': '2', 'priority': '5'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.post('/recommendations', data=data, content_type='application/json')
+        self.assertEqual( resp.status_code, status.HTTP_400_BAD_REQUEST )
+        
 ######################################################################
 # Utility functions
 ######################################################################

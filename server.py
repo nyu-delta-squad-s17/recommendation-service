@@ -129,7 +129,7 @@ def update_recommendations(id):
     if valid:
         payload = json.loads(request.get_data())
         if "id" not in payload or id != payload["id"]:
-            app.logger.error('Error: id does not match')
+            # app.logger.error('Error: id does not match')
             message = {'error' : 'id does not match'}
             rc = HTTP_400_BAD_REQUEST
             return reply(message, rc)
@@ -193,11 +193,10 @@ def is_valid(raw_data):
     try:
         data = json.loads(raw_data)
     except:
-        app.logger.error('Invalid JOSN format')
         message = {'error': 'JSON decoding error'}
         return message, False
     if set(data.keys()) != set(['priority', 'related_product_id', 'parent_product_id', 'type']):
-        app.logger.error('key set does not match')
+        # app.logger.error('key set does not match')
         message = {'error': 'key set does not match'}
         return message, False
     try:
@@ -207,11 +206,11 @@ def is_valid(raw_data):
         related_pid = int(data['related_product_id'])
         parent_pid = int(data['parent_product_id'])
     except ValueError as err:
-        app.logger.error('Data value error: %s', err)
+        # app.logger.error('Data value error: %s', err)
         message = {'error': 'Data value error: %s' % err}
         return message, False
     except TypeError as err:
-        app.logger.error('Data type error: %s', err)
+        # app.logger.error('Data type error: %s', err)
         message = {'error': 'Data type error: %s' % err}
         return message, False
     return "", True
@@ -287,15 +286,18 @@ def initialize_testmysql():
         print('*** FATAL ERROR: Could not connect to the MySQL Service')
         exit(1)
 
+def initialize_index():
+    global current_largest_id
+    result = conn.execute("select max(id) from recommendations")
+    current_largest_id = list(result)[0][0]
+
 ######################################################################
 #   M A I N
 ######################################################################
 if __name__ == "__main__":
     print "Recommendations Service Starting..."
     inititalize_mysql()
-    global current_largest_id
-    result = conn.execute("select max(id) from recommendations")
-    current_largest_id = list(result)[0][0]
+    initialize_index()
     # Pull options from environment
     debug = (os.getenv('DEBUG', 'False') == 'True')
     port = os.getenv('PORT', '5000')
