@@ -229,15 +229,15 @@ class TestRecommendationServer(unittest.TestCase):
         self.assertEqual( resp.status_code, status.HTTP_400_BAD_REQUEST )
 
     def test_update_recommendation(self):
-        new_recommendation = {'parent_product_id': '2', 'priority': '5', 'related_product_id':'2', 'type': 'x-sell'}
+        new_recommendation = {'parent_product_id': '2', 'priority': '5', 'related_product_id':'4', 'type': 'x-sell'}
         data = json.dumps(new_recommendation)
-        resp = self.app.put('/recommendations/1', data=data, content_type='application/json')
+        resp = self.app.put('/recommendations/3', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, status.HTTP_200_OK )
         new_json = json.loads(resp.data)
-        self.assertEqual (new_json['parent_product'], 2)
+        self.assertEqual (new_json['parent_product_id'], 2)
 
     def test_update_recommendation_with_no_data(self):
-        resp = self.app.put('/recommendations/2', data=None, content_type='application/json')
+        resp = self.app.put('/recommendations/3', data=None, content_type='application/json')
         self.assertEqual( resp.status_code, status.HTTP_400_BAD_REQUEST )
         
 ######################################################################

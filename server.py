@@ -128,11 +128,6 @@ def update_recommendations(id):
     message, valid = is_valid(request.get_data())
     if valid:
         payload = json.loads(request.get_data())
-        '''if "id" not in payload or id != payload["id"]:
-            # app.logger.error('Error: id does not match')
-            message = {'error' : 'id does not match'}
-            rc = HTTP_400_BAD_REQUEST
-            return reply(message, rc)'''
         conn.execute("UPDATE recommendations \
                       SET type=\"%s\", priority=%s \
                       WHERE parent_product_id=%s \
@@ -141,7 +136,7 @@ def update_recommendations(id):
                         payload['priority'],
                         payload['parent_product_id'],
                         payload['related_product_id'],
-                        payload['id']
+                        id
                         ))
         return get_recommendations(id)
     else:
