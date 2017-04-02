@@ -222,6 +222,10 @@ class TestRecommendationServer(unittest.TestCase):
         data = json.dumps(new_recommendation)
         resp = self.app.post('/recommendations', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
+
+    def test_initialize_db(self):
+        server.initialize_mysql()
+        self.assertTrue(server.conn != None)
         
 ######################################################################
 # Utility functions
