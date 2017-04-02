@@ -245,7 +245,7 @@ def connect_mysql(user, passwd, server, port, database):
 #   1) In Bluemix with cleardb bound through VCAP_SERVICES
 #   2) With MySQL --linked in a Docker container in virtual machine
 ######################################################################
-def inititalize_mysql():
+def initialize_mysql():
     global conn
     conn = None
     # Get the crdentials from the Bluemix environment
@@ -296,7 +296,7 @@ def initialize_index():
 ######################################################################
 if __name__ == "__main__":
     print "Recommendations Service Starting..."
-    inititalize_mysql()
+    initialize_mysql()
     initialize_index()
     # Pull options from environment
     debug = (os.getenv('DEBUG', 'False') == 'True')
