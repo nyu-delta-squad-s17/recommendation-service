@@ -153,19 +153,22 @@ def delete_recommendations(id):
         conn.execute("DELETE FROM recommendations WHERE id=%d" % id)
     return '', HTTP_204_NO_CONTENT
 
+######################################################################
+# ACTION - UPDATE PRIORITY WHEN RECOMMENDATION IS CLICKED
+######################################################################
 @app.route('/recommendations/<int:id>/clicked', methods=['PUT'])
 def increase_priority(id):
+    if get_recommendations(id).status_code == 404:
+        message = {'error': 'Recommendation with id: %s was not found' % str(id)}
+        return reply(message, HTTP_404_NOT_FOUND)
     """
     Decrements the priority from low to high of the recommendations_id until 1
     """
-    try:
-        conn.execute("UPDATE recommendations \
-                      SET priority= priority - 1 \
-                      WHERE id=%d \
-                      AND priority>1"
-                     % (id))
-    except:
-        pass
+    conn.execute("UPDATE recommendations \
+                  SET priority= priority - 1 \
+                  WHERE id=%d \
+                  AND priority>1"
+                 % (id))
     return reply(None, HTTP_200_OK)
 
 ######################################################################
@@ -240,7 +243,7 @@ def connect_mysql(user, passwd, server, port, database):
 #   1) In Bluemix with cleardb bound through VCAP_SERVICES
 #   2) With MySQL --linked in a Docker container in virtual machine
 ######################################################################
-def inititalize_mysql():
+def initialize_mysql():
     global conn
     conn = None
     # Get the crdentials from the Bluemix environment
@@ -291,7 +294,7 @@ def initialize_index():
 ######################################################################
 if __name__ == "__main__":
     print "Recommendations Service Starting..."
-    inititalize_mysql()
+    initialize_mysql()
     initialize_index()
     # Pull options from environment
     debug = (os.getenv('DEBUG', 'False') == 'True')
