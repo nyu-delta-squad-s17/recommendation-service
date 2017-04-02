@@ -122,7 +122,7 @@ If the VM is no longer needed you can remove it with:
 * Response Code: 200 - OK
 * Payload:
 ```json
-{"priority": 1, "related_product_id": 2, "type": "x-sell", "id": 1, "parent_product_id": 3}
+{"priority": 1, "related_product_id": 2, "type": "x-sell", "parent_product_id": 3}
 ```
 
 * Response body:
