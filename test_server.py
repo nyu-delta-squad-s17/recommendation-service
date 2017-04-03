@@ -224,12 +224,12 @@ class TestRecommendationServer(unittest.TestCase):
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
 
     def test_update_recommendation(self):
-        new_recommendation = {'parent_product_id': '2', 'priority': '5', 'related_product_id':'4', 'type': 'up-sell'}
+        new_recommendation = {'parent_product_id': '2', 'priority': '5', 'related_product_id':'4', 'type': 'x-sell'}
         data = json.dumps(new_recommendation)
         resp = self.app.put('/recommendations/3', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_200_OK )
         new_json = json.loads(resp.data)
-        self.assertEqual (new_json['type'], 'up-sell')
+        self.assertEqual (new_json['type'], 'x-sell')
 
     def test_update_recommendation_with_no_data(self):
         resp = self.app.put('/recommendations/3', data=None, content_type='application/json')
@@ -245,7 +245,17 @@ class TestRecommendationServer(unittest.TestCase):
         new_recommendation = {'parent_product_id': '2', 'priority': '5', 'related_product_id':'4', 'type': 'up-sell'}
         data = json.dumps(new_recommendation)
         resp = self.app.put('/recommendations/0', data=data, content_type='application/json')
-        self.assertEquals( resp.status_code, status.HTTP_404_NOT_FOUND )
+        self.assertEquals( resp.status_code, HTTP_404_NOT_FOUND )
+
+    def test_update_recommendation_idempotency(self):
+        new_recommendation = {'parent_product_id': '1', 'priority': '3', 'related_product_id':'3', 'type': 'up-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.put('/recommendations/1', data=data, content_type='application/json')
+        self.assertEquals( resp.status_code, HTTP_200_OK )
+        new_json = json.loads(resp.data)
+        self.assertEqual (new_json['type'], 'x-sell')
+        self.assertEqual (new_json['priority'], 5)
+        self.assertEqual (new_json['related_product_id'], 2)
 
     def test_initialize_db(self):
         server.initialize_mysql()
