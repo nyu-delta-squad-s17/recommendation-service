@@ -13,7 +13,7 @@ Background:
 Scenario: Running server
 	When I visit the "home page"
 	Then I should see "Recommendations REST API Service"
-	Then I should not see "404 Not Found"
+	And I should not see "404 Not Found"
 
 Scenario: List all pets
 	When I visit "/recommendations"
