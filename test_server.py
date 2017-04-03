@@ -164,60 +164,60 @@ class TestRecommendationServer(unittest.TestCase):
         self.assertEqual( len(data), recommendation_count + 1 )
         self.assertIn( new_json, data )
 
-    def test_create_pet_with_no_data(self):
+    def test_create_recommendation_with_no_data(self):
         resp = self.app.post('/recommendations', content_type='application/json')
         data = json.loads(resp.data)
         self.assertTrue( resp.status_code == HTTP_400_BAD_REQUEST )
 
-    def test_create_pet_with_no_parent_product_id(self):
+    def test_create_recommendation_with_no_parent_product_id(self):
         new_recommendation = {'priority': '5', 'related_product_id':'2', 'type': 'x-sell'}
         data = json.dumps(new_recommendation)
         resp = self.app.post('/recommendations', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
 
-    def test_create_pet_with_no_related_product_id(self):
+    def test_create_recommendation_with_no_related_product_id(self):
         new_recommendation = {'parent_product_id': '2', 'priority': '5', 'type': 'x-sell'}
         data = json.dumps(new_recommendation)
         resp = self.app.post('/recommendations', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
 
-    def test_create_pet_with_no_priority(self):
+    def test_create_recommendation_with_no_priority(self):
         new_recommendation = {'parent_product_id': '2', 'related_product_id':'2', 'type': 'x-sell'}
         data = json.dumps(new_recommendation)
         resp = self.app.post('/recommendations', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
 
-    def test_create_pet_with_no_type(self):
+    def test_create_recommendation_with_no_type(self):
         new_recommendation = {'parent_product_id': '2', 'priority': '5', 'related_product_id':'2'}
         data = json.dumps(new_recommendation)
         resp = self.app.post('/recommendations', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
 
-    def test_create_pet_with_no_parent_product_id_and_related_product_id(self):
+    def test_create_recommendation_with_no_parent_product_id_and_related_product_id(self):
         new_recommendation = {'priority': '5', 'type': 'x-sell'}
         data = json.dumps(new_recommendation)
         resp = self.app.post('/recommendations', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
 
-    def test_create_pet_with_no_parent_product_id_and_priority(self):
+    def test_create_recommendation_with_no_parent_product_id_and_priority(self):
         new_recommendation = {'related_product_id':'2', 'type': 'x-sell'}
         data = json.dumps(new_recommendation)
         resp = self.app.post('/recommendations', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
 
-    def test_create_pet_with_no_priority_and_related_product_id(self):
+    def test_create_recommendation_with_no_priority_and_related_product_id(self):
         new_recommendation = {'parent_product_id': '2', 'type': 'x-sell'}
         data = json.dumps(new_recommendation)
         resp = self.app.post('/recommendations', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
 
-    def test_create_pet_with_no_priority_and_type(self):
+    def test_create_recommendation_with_no_priority_and_type(self):
         new_recommendation = {'parent_product_id': '2', 'related_product_id':'2'}
         data = json.dumps(new_recommendation)
         resp = self.app.post('/recommendations', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
 
-    def test_create_pet_with_no_related_product_id_and_type(self):
+    def test_create_recommendation_with_no_related_product_id_and_type(self):
         new_recommendation = {'parent_product_id': '2', 'priority': '5'}
         data = json.dumps(new_recommendation)
         resp = self.app.post('/recommendations', data=data, content_type='application/json')
@@ -229,11 +229,33 @@ class TestRecommendationServer(unittest.TestCase):
         resp = self.app.put('/recommendations/3', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_200_OK )
         new_json = json.loads(resp.data)
-        self.assertEqual (new_json['parent_product_id'], 2)
+        self.assertEqual (new_json['type'], 'x-sell')
 
     def test_update_recommendation_with_no_data(self):
         resp = self.app.put('/recommendations/3', data=None, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
+
+    def test_update_recommendation_with_no_parent_product_id(self):
+        new_recommendation = {'priority': '5', 'related_product_id':'4', 'type': 'x-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.put('/recommendations/2', data=data, content_type='application/json')
+        self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
+
+    def test_update_recommendation_not_found(self):
+        new_recommendation = {'parent_product_id': '2', 'priority': '5', 'related_product_id':'4', 'type': 'up-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.put('/recommendations/0', data=data, content_type='application/json')
+        self.assertEquals( resp.status_code, HTTP_404_NOT_FOUND )
+
+    def test_update_recommendation_idempotency(self):
+        new_recommendation = {'parent_product_id': '1', 'priority': '3', 'related_product_id':'3', 'type': 'up-sell'}
+        data = json.dumps(new_recommendation)
+        resp = self.app.put('/recommendations/1', data=data, content_type='application/json')
+        self.assertEquals( resp.status_code, HTTP_200_OK )
+        new_json = json.loads(resp.data)
+        self.assertEqual (new_json['type'], 'x-sell')
+        self.assertEqual (new_json['priority'], 5)
+        self.assertEqual (new_json['related_product_id'], 2)
 
     def test_initialize_db(self):
         server.initialize_mysql()
