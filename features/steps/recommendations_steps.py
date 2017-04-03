@@ -23,7 +23,10 @@ def step_impl(context):
     # server.data_reset()
     server.conn.execute("TRUNCATE TABLE `recommendations`")
     for row in context.table:
-        server.conn.execute("INSERT INTO `recommendations` VALUES (%d, %d, %d, '%s\', %d)" % (int(row["id"]), int(row["parent_product_id"]), int(row["related_product_id"]), row["type"], int(row["priority"])))
+        server.conn.execute("INSERT INTO `recommendations` VALUES (%d, %d, %d,\
+                '%s\', %d)" % (int(row["id"]), int(row["parent_product_id"]),
+                               int(row["related_product_id"]), row["type"],
+                               int(row["priority"])))
 
 
 @when(u'I visit "{url}"')
