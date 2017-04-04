@@ -20,3 +20,8 @@ Scenario: List all pets
 	Then I should see "1"
 	And I should see "2"
 	And I should see "3"
+
+Scenario: Create a recommendation
+	When I create "/recommendations" with parent product "9", related product "5", type "x-sell", and priority "2"
+	And I visit "/recommendations"
+	Then I should see "9"

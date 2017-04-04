@@ -32,3 +32,13 @@ def step_impl(context):
 def step_impl(context, url):
     context.resp = context.app.get(url)
     assert context.resp.status_code == 200
+
+@when(u'I create "{url}" with parent product "{parent_product_id}", related product "{related_product_id}", type "{type}", and priority "{priority}"')
+def step_impl(context, url, parent_product_id, related_product_id, type, priority):
+    data = {"parent_product_id": parent_product_id,
+            "related_product_id": related_product_id,
+            "type": type,
+            "priority": priority
+            }
+    context.resp = context.app.post(url, data=json.dumps(data), content_type='application/json')
+    assert context.resp.status_code == 201
