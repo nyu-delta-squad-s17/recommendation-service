@@ -42,3 +42,10 @@ def step_impl(context, url, parent_product_id, related_product_id, type, priorit
             }
     context.resp = context.app.post(url, data=json.dumps(data), content_type='application/json')
     assert context.resp.status_code == 201
+
+@when(u'I delete "{url}" with id "{id}"')
+def step_impl(context, url, id):
+    target_url = url + '/' + id
+    context.resp = context.app.delete(target_url)
+    assert context.resp.status_code == 204
+    assert context.resp.data is ""
