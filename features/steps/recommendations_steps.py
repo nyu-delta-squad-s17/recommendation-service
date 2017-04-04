@@ -20,14 +20,9 @@ def step_impl(context, message):
 
 @given(u'the following products')
 def step_impl(context):
-    context.app = server.app.test_client()
-    context.server = server
-    context.server.initialize_testmysql()
-    context.server.initialize_index()
-    # server.data_reset()
-    context.server.conn.execute("TRUNCATE TABLE `recommendations`")
+    server.conn.execute("TRUNCATE TABLE `recommendations`")
     for row in context.table:
-        context.server.conn.execute("INSERT INTO `recommendations` VALUES (%d, %d, %d,\
+        server.conn.execute("INSERT INTO `recommendations` VALUES (%d, %d, %d,\
                 '%s\', %d)" % (int(row["id"]), int(row["parent_product_id"]),
                                int(row["related_product_id"]), row["type"],
                                int(row["priority"])))
@@ -37,4 +32,3 @@ def step_impl(context):
 def step_impl(context, url):
     context.resp = context.app.get(url)
     assert context.resp.status_code == 200
-
