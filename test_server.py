@@ -21,7 +21,7 @@ HTTP_409_CONFLICT = status.HTTP_409_CONFLICT
 class TestRecommendationServer(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        server.initialize_testmysql()
+        server.initialize_mysql(test=True)
         server.conn.execute("INSERT INTO `recommendations` VALUES (1,1,2,'x-sell',5),(2,1,3,'up-sell',5),(3,2,4,'up-sell',5)")
         server.initialize_index()
 
@@ -265,6 +265,7 @@ class TestRecommendationServer(unittest.TestCase):
         new_recommendation = {'parent_product_id': 'a', 'priority': '3', 'related_product_id':'3', 'type': 'up-sell'}
         (message, status) = server.is_valid(new_recommendation)
         self.assertEqual(status, False)
+        
     def test_is_valid_errors_typeerror(self):
         new_recommendation = {'parent_product_id': [1], 'priority': '3', 'related_product_id':'3', 'type': 'up-sell'}
         (message, status) = server.is_valid(new_recommendation)
