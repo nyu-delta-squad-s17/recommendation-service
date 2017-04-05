@@ -259,6 +259,16 @@ class TestRecommendationServer(unittest.TestCase):
     def test_initialize_db(self):
         server.initialize_mysql()
         self.assertTrue(server.conn != None)
+
+    def test_is_valid_errors_valueerror(self):
+        new_recommendation = {'parent_product_id': 'a', 'priority': '3', 'related_product_id':'3', 'type': 'up-sell'}
+        (message, status) = server.is_valid(new_recommendation)
+        self.assertEqual(status, False)
+    def test_is_valid_errors_typeerror(self):
+        new_recommendation = {'parent_product_id': [1], 'priority': '3', 'related_product_id':'3', 'type': 'up-sell'}
+        (message, status) = server.is_valid(new_recommendation)
+        self.assertEqual(status, False)
+
         
 ######################################################################
 # Utility functions

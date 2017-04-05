@@ -49,3 +49,9 @@ def step_impl(context, url, id):
     context.resp = context.app.delete(target_url)
     assert context.resp.status_code == 204
     assert context.resp.data is ""
+
+@when(u'I Visit the "{url}" with id "{id}"')
+def step_impl(context, url, id):
+    target_url = url + '/' + id
+    context.resp = context.app.get(target_url)
+    assert context.resp.status_code == 200
