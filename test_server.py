@@ -262,14 +262,19 @@ class TestRecommendationServer(unittest.TestCase):
 
     def test_is_valid_errors_valueerror(self):
         new_recommendation = {'parent_product_id': 'a', 'priority': '3', 'related_product_id':'3', 'type': 'up-sell'}
-        (message, status) = server.is_valid(new_recommendation)
+        data = json.dumps(new_recommendation)
+        (message, status) = server.is_valid(data)
         self.assertEqual(status, False)
-        
+        data = json.dumps(message)
+        self.assertTrue('Data value error' in data)
+
     def test_is_valid_errors_typeerror(self):
         new_recommendation = {'parent_product_id': [1], 'priority': '3', 'related_product_id':'3', 'type': 'up-sell'}
-        (message, status) = server.is_valid(new_recommendation)
+        data = json.dumps(new_recommendation)
+        (message, status) = server.is_valid(data)
         self.assertEqual(status, False)
-
+        data = json.dumps(message)
+        self.assertTrue('Data type error' in data)
         
 ######################################################################
 # Utility functions
