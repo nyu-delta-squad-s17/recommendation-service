@@ -27,3 +27,7 @@ Scenario: Delete a recommendation
     Then I should see "1"
     And I should see "2"
     And I should not see "4"
+
+Scenario: Read single recommendation
+	When I visit the "/recommendations" with id "1"
+	Then I should see "1"
