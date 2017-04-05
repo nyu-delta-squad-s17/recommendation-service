@@ -21,6 +21,11 @@ Scenario: List all recommendations
 	And I should see "2"
 	And I should see "3"
 
+Scenario: Create a recommendation
+	When I create "/recommendations" with parent product "9", related product "5", type "x-sell", and priority "2"
+	And I visit "/recommendations"
+	Then I should see "9"
+  
 Scenario: Delete a recommendation
     When I delete "/recommendations" with id "3"
     And I visit "/recommendations"

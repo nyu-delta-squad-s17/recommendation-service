@@ -175,10 +175,8 @@ def increase_priority(id):
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################
 def next_index():
-    global current_largest_id
-    with lock:
-        current_largest_id += 1
-    return current_largest_id
+    max_id_result = conn.execute("select max(id) from recommendations")
+    return list(max_id_result)[0][0] + 1
 
 def reply(message, rc):
     # print "message = " + str(message);
@@ -230,11 +228,7 @@ def retrieve_by_id(id):
 ######################################################################
 def connect_mysql(user, passwd, server, port, database):
     engine = create_engine("mysql://%s:%s@%s:%s/%s" % (user, passwd, server, port, database), echo = False)
-    try:
-        conn = engine.connect()
-    except OperationalError:
-        conn = None
-    return conn
+    return engine.connect()
 
 
 ######################################################################
@@ -243,7 +237,7 @@ def connect_mysql(user, passwd, server, port, database):
 #   1) In Bluemix with cleardb bound through VCAP_SERVICES
 #   2) With MySQL --linked in a Docker container in virtual machine
 ######################################################################
-def initialize_mysql():
+def initialize_mysql(test=False):
     global conn
     conn = None
     # Get the crdentials from the Bluemix environment
@@ -256,38 +250,24 @@ def initialize_mysql():
         conn = connect_mysql(creds['username'], creds['password'], creds['hostname'], creds['port'], creds['name'])
     else:
         print("VCAP_SERVICES not found, checking localhost for MySQL")
-        conn = connect_mysql('root', '', '127.0.0.1', 3306, 'nyudevops')
-    if not conn:
-        # if you end up here, mysql instance is down.
-        print('*** FATAL ERROR: Could not connect to the MySQL Service')
-        exit(1)
-
-def initialize_testmysql():
-    global conn
-    engine = create_engine("mysql://%s:%s@%s:%s/%s" % ('root', '', '127.0.0.1', 3306, 'tdd'), echo = False)
-    meta = MetaData()
-    recommendations = Table('recommendations', meta,
-        Column('id', Integer, nullable=False, primary_key=True),
-        Column('parent_product_id', Integer, nullable=False),
-        Column('related_product_id', Integer, nullable=False),
-        Column('type', String(20), nullable=False),
-        Column('priority', Integer, nullable=True)
-    )
-    try:
-        recommendations.drop(engine, checkfirst=True)
-    except:
-        pass
-    recommendations.create(engine, checkfirst=True)
-    conn = engine.connect()
-    if not conn:
-        # if you end up here, mysql instance is down.
-        print('*** FATAL ERROR: Could not connect to the MySQL Service')
-        exit(1)
-
-def initialize_index():
-    global current_largest_id
-    result = conn.execute("select max(id) from recommendations")
-    current_largest_id = list(result)[0][0]
+        if test:
+            engine = create_engine("mysql://%s:%s@%s:%s/%s" % ('root', '', '127.0.0.1', 3306, 'tdd'), echo = False)
+            meta = MetaData()
+            recommendations = Table('recommendations', meta,
+                Column('id', Integer, nullable=False, primary_key=True),
+                Column('parent_product_id', Integer, nullable=False),
+                Column('related_product_id', Integer, nullable=False),
+                Column('type', String(20), nullable=False),
+                Column('priority', Integer, nullable=True)
+            )
+            try:
+                recommendations.drop(engine, checkfirst=True)
+            except:
+                pass
+            recommendations.create(engine, checkfirst=True)
+            conn = engine.connect()
+        else:
+            conn = connect_mysql('root', '', '127.0.0.1', 3306, 'nyudevops')
 
 ######################################################################
 #   M A I N
@@ -295,7 +275,6 @@ def initialize_index():
 if __name__ == "__main__":
     print "Recommendations Service Starting..."
     initialize_mysql()
-    initialize_index()
     # Pull options from environment
     debug = (os.getenv('DEBUG', 'False') == 'True')
     port = os.getenv('PORT', '5000')
