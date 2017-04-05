@@ -30,6 +30,9 @@ HTTP_400_BAD_REQUEST = 400
 HTTP_404_NOT_FOUND = 404
 HTTP_409_CONFLICT = 409
 
+debug = (os.getenv('DEBUG', 'False') == 'True')
+port = os.getenv('PORT', '5000')
+
 # Lock for thread-safe counter increment
 lock = Lock()
 
@@ -268,14 +271,14 @@ def initialize_mysql(test=False):
             conn = engine.connect()
         else:
             conn = connect_mysql('root', '', '127.0.0.1', 3306, 'nyudevops')
+            
 
 ######################################################################
 #   M A I N
 ######################################################################
+
 if __name__ == "__main__":
     print "Recommendations Service Starting..."
     initialize_mysql()
     # Pull options from environment
-    debug = (os.getenv('DEBUG', 'False') == 'True')
-    port = os.getenv('PORT', '5000')
     app.run(host='0.0.0.0', port=int(port), debug=debug)
