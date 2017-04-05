@@ -30,6 +30,9 @@ HTTP_400_BAD_REQUEST = 400
 HTTP_404_NOT_FOUND = 404
 HTTP_409_CONFLICT = 409
 
+debug = (os.getenv('DEBUG', 'False') == 'True')
+port = os.getenv('PORT', '5000')
+
 # Lock for thread-safe counter increment
 lock = Lock()
 
@@ -269,8 +272,7 @@ def initialize_mysql(test=False):
         else:
             conn = connect_mysql('root', '', '127.0.0.1', 3306, 'nyudevops')
             
-debug = (os.getenv('DEBUG', 'False') == 'True')
-port = os.getenv('PORT', '5000')
+
 ######################################################################
 #   M A I N
 ######################################################################
