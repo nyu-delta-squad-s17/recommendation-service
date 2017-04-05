@@ -175,10 +175,8 @@ def increase_priority(id):
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################
 def next_index():
-    global current_largest_id
-    with lock:
-        current_largest_id += 1
-    return current_largest_id
+    max_id_result = conn.execute("select max(id) from recommendations")
+    return list(max_id_result)[0][0] + 1
 
 def reply(message, rc):
     # print "message = " + str(message);
@@ -271,18 +269,12 @@ def initialize_mysql(test=False):
         else:
             conn = connect_mysql('root', '', '127.0.0.1', 3306, 'nyudevops')
 
-def initialize_index():
-    global current_largest_id
-    result = conn.execute("select max(id) from recommendations")
-    current_largest_id = list(result)[0][0]
-
 ######################################################################
 #   M A I N
 ######################################################################
 if __name__ == "__main__":
     print "Recommendations Service Starting..."
     initialize_mysql()
-    initialize_index()
     # Pull options from environment
     debug = (os.getenv('DEBUG', 'False') == 'True')
     port = os.getenv('PORT', '5000')

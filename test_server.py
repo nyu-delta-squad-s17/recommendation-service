@@ -23,7 +23,6 @@ class TestRecommendationServer(unittest.TestCase):
     def setUpClass(self):
         server.initialize_mysql(test=True)
         server.conn.execute("INSERT INTO `recommendations` VALUES (1,1,2,'x-sell',5),(2,1,3,'up-sell',5),(3,2,4,'up-sell',5)")
-        server.initialize_index()
 
     @classmethod
     def tearDownClass(self):
