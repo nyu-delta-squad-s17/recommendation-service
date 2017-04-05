@@ -6,7 +6,6 @@ import logging
 import json
 import server
 from flask_api import status    # HTTP Status Codes
-from server import is_valid
 
 # Status Codes
 HTTP_200_OK = status.HTTP_200_OK
@@ -264,11 +263,11 @@ class TestRecommendationServer(unittest.TestCase):
 
     def test_is_valid_errors_valueerror(self):
         new_recommendation = {'parent_product_id': 'a', 'priority': '3', 'related_product_id':'3', 'type': 'up-sell'}
-        (message, status) = is_valid(new_recommendation)
+        (message, status) = server.is_valid(new_recommendation)
         self.assertEqual(status, False)
     def test_is_valid_errors_typeerror(self):
         new_recommendation = {'parent_product_id': [1], 'priority': '3', 'related_product_id':'3', 'type': 'up-sell'}
-        (message, status) = is_valid(new_recommendation)
+        (message, status) = server.is_valid(new_recommendation)
         self.assertEqual(status, False)
 
         
