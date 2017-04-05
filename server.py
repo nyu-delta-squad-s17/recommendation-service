@@ -268,14 +268,15 @@ def initialize_mysql(test=False):
             conn = engine.connect()
         else:
             conn = connect_mysql('root', '', '127.0.0.1', 3306, 'nyudevops')
-
+            
+debug = (os.getenv('DEBUG', 'False') == 'True')
+port = os.getenv('PORT', '5000')
 ######################################################################
 #   M A I N
 ######################################################################
+
 if __name__ == "__main__":
     print "Recommendations Service Starting..."
     initialize_mysql()
     # Pull options from environment
-    debug = (os.getenv('DEBUG', 'False') == 'True')
-    port = os.getenv('PORT', '5000')
     app.run(host='0.0.0.0', port=int(port), debug=debug)
