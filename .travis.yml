@@ -1,0 +1,30 @@
+# sudo: required
+
+language: python
+python:
+  - "2.7"
+
+# command to install dependencies
+install: "pip install -r requirements.txt"
+
+# ensure docker running
+services:
+      # - docker
+      - mysql
+
+# command to run tests
+before_script:
+  # - docker run --name mysql -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -d mysql
+  # - sudo docker exec -i mysql mysql -h 127.0.0.1 -u root < recommendations.sql
+  - mysql < recommendations.sql
+  - service mysql status
+  # - docker ps | grep -q mysql
+
+script:
+  - nosetests
+  - behave
+  # - nosetests tests/test_selenium.py
+  # - coverage run tests/test_server.py
+
+after_success:
+  - codecov
