@@ -1,6 +1,5 @@
 Flask==0.12
 SQLAlchemy==1.1.5
-MySQL-python==1.2.5
 Flask-API==0.6.9
 # Testing
 httpie==0.9.9
