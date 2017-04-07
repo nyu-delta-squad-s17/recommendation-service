@@ -22,8 +22,6 @@ class TestRecommendationServer(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         server.initialize_mysql(test=True)
-        server.conn.execute("DELETE FROM `recommendations` WHERE id in (1,2,3)")
-        server.conn.execute("INSERT INTO `recommendations` VALUES (1,1,2,'x-sell',5),(2,1,3,'up-sell',5),(3,2,4,'up-sell',5)")
 
     @classmethod
     def tearDownClass(self):
@@ -32,6 +30,8 @@ class TestRecommendationServer(unittest.TestCase):
     def setUp(self):
         server.app.debug = True
         self.app = server.app.test_client()
+        server.conn.execute("DELETE FROM `recommendations` WHERE id in (1,2,3)")
+        server.conn.execute("INSERT INTO `recommendations` VALUES (1,1,2,'x-sell',5),(2,1,3,'up-sell',5),(3,2,4,'up-sell',5)")
 
     def test_index(self):
         resp = self.app.get('/')
