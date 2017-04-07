@@ -247,15 +247,15 @@ class TestRecommendationServer(unittest.TestCase):
         resp = self.app.put('/recommendations/0', data=data, content_type='application/json')
         self.assertEquals( resp.status_code, HTTP_404_NOT_FOUND )
 
-    def test_update_recommendation_idempotency(self):
-        new_recommendation = {'parent_product_id': '5', 'priority': '5', 'related_product_id':'6', 'type': 'x-sell'}
-        data = json.dumps(new_recommendation)
-        resp = self.app.put('/recommendations/4', data=data, content_type='application/json')
-        self.assertEquals( resp.status_code, HTTP_200_OK )
-        new_json = json.loads(resp.data)
-        self.assertEqual (new_json['type'], 'x-sell')
-        self.assertEqual (new_json['priority'], 5)
-        self.assertEqual (new_json['related_product_id'], 6)
+    # def test_update_recommendation_idempotency(self):
+    #     new_recommendation = {'parent_product_id': '5', 'priority': '5', 'related_product_id':'6', 'type': 'x-sell'}
+    #     data = json.dumps(new_recommendation)
+    #     resp = self.app.put('/recommendations/4', data=data, content_type='application/json')
+    #     self.assertEquals( resp.status_code, HTTP_200_OK )
+    #     new_json = json.loads(resp.data)
+    #     self.assertEqual (new_json['type'], 'x-sell')
+    #     self.assertEqual (new_json['priority'], 5)
+    #     self.assertEqual (new_json['related_product_id'], 6)
 
     def test_initialize_db(self):
         server.initialize_mysql()
