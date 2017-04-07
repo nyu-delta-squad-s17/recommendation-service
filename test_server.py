@@ -22,8 +22,8 @@ class TestRecommendationServer(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         server.initialize_mysql(test=True)
-        server.conn.execute("DELETE FROM `recommendations` WHERE id in (1,2,3)")
-        server.conn.execute("INSERT INTO `recommendations` VALUES (1,1,2,'x-sell',5),(2,1,3,'up-sell',5),(3,2,4,'up-sell',5)")
+        server.conn.execute("DELETE FROM `recommendations` WHERE id in (1,2,3,4)")
+        server.conn.execute("INSERT INTO `recommendations` VALUES (1,1,2,'x-sell',5),(2,1,3,'up-sell',5),(3,2,4,'up-sell',5),(4,5,6,'x-sell',5)")
 
     @classmethod
     def tearDownClass(self):
@@ -238,7 +238,7 @@ class TestRecommendationServer(unittest.TestCase):
     def test_update_recommendation_with_no_parent_product_id(self):
         new_recommendation = {'priority': '5', 'related_product_id':'4', 'type': 'x-sell'}
         data = json.dumps(new_recommendation)
-        resp = self.app.put('/recommendations/2', data=data, content_type='application/json')
+        resp = self.app.put('/recommendations/3', data=data, content_type='application/json')
         self.assertEqual( resp.status_code, HTTP_400_BAD_REQUEST )
 
     def test_update_recommendation_not_found(self):
@@ -248,14 +248,14 @@ class TestRecommendationServer(unittest.TestCase):
         self.assertEquals( resp.status_code, HTTP_404_NOT_FOUND )
 
     def test_update_recommendation_idempotency(self):
-        new_recommendation = {'parent_product_id': '1', 'priority': '3', 'related_product_id':'3', 'type': 'up-sell'}
+        new_recommendation = {'parent_product_id': '5', 'priority': '5', 'related_product_id':'6', 'type': 'x-sell'}
         data = json.dumps(new_recommendation)
-        resp = self.app.put('/recommendations/1', data=data, content_type='application/json')
+        resp = self.app.put('/recommendations/4', data=data, content_type='application/json')
         self.assertEquals( resp.status_code, HTTP_200_OK )
         new_json = json.loads(resp.data)
         self.assertEqual (new_json['type'], 'x-sell')
         self.assertEqual (new_json['priority'], 5)
-        self.assertEqual (new_json['related_product_id'], 2)
+        self.assertEqual (new_json['related_product_id'], 6)
 
     def test_initialize_db(self):
         server.initialize_mysql()
