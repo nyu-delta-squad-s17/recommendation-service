@@ -36,3 +36,8 @@ Scenario: Delete a recommendation
 Scenario: Read single recommendation
 	When I visit the "/recommendations" with id "1"
 	Then I should see "1"
+
+Scenario: Click a recommendation
+	When I click the "/recommendations" with id "1"
+	Then I should see "4"
+	And I should not see "5"

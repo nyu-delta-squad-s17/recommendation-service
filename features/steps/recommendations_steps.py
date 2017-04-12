@@ -55,3 +55,19 @@ def step_impl(context, url, id):
     target_url = url + '/' + id
     context.resp = context.app.get(target_url)
     assert context.resp.status_code == 200
+
+@when(u'I click the "{url}" with id "{id}"')
+def step_impl(context, url, id):
+    context.respGet1 = context.app.get(url + '/' + id)
+    data = json.loads(context.respGet1.data)
+    old_priority = data['priority']
+    target_url = url + '/' + id + '/clicked'
+    context.respClick = context.app.put(target_url)
+    assert context.respClick.status_code == 200
+    context.resp = context.app.get(url + '/' + id)
+    data2 = json.loads(context.resp.data)
+    new_priority = data2['priority']
+    if (old_priority == 1):
+        assert ( new_priority == old_priority )
+    else: 
+        assert ( new_priority == old_priority - 1 )
