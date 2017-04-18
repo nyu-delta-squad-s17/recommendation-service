@@ -9,3 +9,4 @@ applications:
   buildpack: python_buildpack
   services:
   - MySQLService
+  random-route: true
