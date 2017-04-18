@@ -51,3 +51,8 @@ Scenario: Read recommendation with query parameter product-id
 	When I click "/recommendations" with product-id "2"
 	Then I should see "up-sell"
 	And I should not see "1"
+
+Scenario: Update a recommendation
+	When I update "/recommendations" with id "2" and parent product "1", related product "3", type "up-sell", and priority "8"
+	Then I should see "8"
+	And I should not see "5"

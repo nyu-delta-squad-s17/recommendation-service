@@ -83,3 +83,14 @@ def step_impl(context, url, productid):
     target_url = url + '?' + 'product-id=' + productid
     context.resp = context.app.get(target_url)
     assert context.resp.status_code == 200
+
+@when(u'I update "{url}" with id "{id}" and parent product "{parent_product_id}", related product "{related_product_id}", type "{type}", and priority "{priority}"')
+def step_impl(context, url, id, parent_product_id, related_product_id, type, priority):
+    target_url = url + '/' + id
+    data = {"parent_product_id": parent_product_id,
+            "related_product_id": related_product_id,
+            "type": type,
+            "priority": priority
+            }
+    context.resp = context.app.put(target_url, data=json.dumps(data), content_type='application/json')
+    assert context.resp.status_code == 200
