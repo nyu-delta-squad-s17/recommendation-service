@@ -41,3 +41,13 @@ Scenario: Click a recommendation
 	When I click the "/recommendations" with id "1"
 	Then I should see "4"
 	And I should not see "5"
+
+Scenario: Read recommendation with query parameter type
+	When I click "/recommendations" with type "'x-sell'"
+	Then I should see "x-sell"
+	And I should not see "up-sell"
+
+Scenario: Read recommendation with query parameter product-id
+	When I click "/recommendations" with product-id "2"
+	Then I should see "up-sell"
+	And I should not see "1"

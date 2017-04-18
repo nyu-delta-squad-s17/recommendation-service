@@ -71,3 +71,15 @@ def step_impl(context, url, id):
         assert ( new_priority == old_priority )
     else: 
         assert ( new_priority == old_priority - 1 )
+
+@when(u'I click "{url}" with type "{type}"')
+def step_impl(context, url, type):
+    target_url = url + '?' + 'type=' + type
+    context.resp = context.app.get(target_url)
+    assert context.resp.status_code == 200
+
+@when(u'I click "{url}" with product-id "{productid}"')
+def step_impl(context, url, productid):
+    target_url = url + '?' + 'product-id=' + productid
+    context.resp = context.app.get(target_url)
+    assert context.resp.status_code == 200
