@@ -54,5 +54,5 @@ Scenario: Read recommendation with query parameter product-id
 
 Scenario: Update a recommendation
 	When I update "/recommendations" with id "2" and parent product "1", related product "3", type "up-sell", and priority "8"
+	and When I visit "/recommendations"
 	Then I should see "8"
-	And I should not see "5"
