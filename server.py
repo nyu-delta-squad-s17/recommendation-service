@@ -18,9 +18,27 @@ from flask import Flask, Response, jsonify, request, json
 #from simplejson import JSONDecodeError
 from sqlalchemy import *
 from sqlalchemy.exc import *
+from flasgger import Swagger
 
 # Create Flask application
 app = Flask(__name__)
+
+# Configure Swagger before initilaizing it
+app.config['SWAGGER'] = {
+    "swagger_version": "2.0",
+    "specs": [
+        {
+            "version": "1.0.0",
+            "title": "DevOps Swagger Recommendations App",
+            "description": "This is a sample server Recommendations server.",
+            "endpoint": 'v1_spec',
+            "route": '/v1/spec'
+        }
+    ]
+}
+
+# Initialize Swagger after configuring it
+Swagger(app)
 
 # Status Codes
 HTTP_200_OK = 200
@@ -53,9 +71,6 @@ def index():
 ######################################################################
 @app.route('/recommendations', methods=['GET'])
 def list_recommendations():
-    """
-    Basically prints out all the recommendations.
-    """
     message = []
     request_type = request.args.get('type')
     request_product_id = request.args.get('product-id')
