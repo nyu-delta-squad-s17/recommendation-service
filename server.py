@@ -71,6 +71,49 @@ def index():
 ######################################################################
 @app.route('/recommendations', methods=['GET'])
 def list_recommendations():
+    """
+    Retrieve a list of Recommendations
+    This endpoint will return all Recommendations unless a query parameter is specificed
+    ---
+    tags:
+      - Recommendations
+    description: The Recommendations endpoint allows you to query Recommendations
+    parameters:
+      - name: type
+        in: query
+        description: the type of Recommendation you are looking for
+        required: false
+        type: string
+      - name: product-id
+        in: query
+        description: the id of the product you would like recommendations for
+        required: false
+        type: int
+    responses:
+      200:
+        description: An array of Recommendations
+        schema:
+          type: array
+          items:
+            schema:
+              id: Recommendation
+              properties:
+                id:
+                  type: integer
+                  description: unique id assigned internally by service
+                parent_product_id:
+                  type: integer
+                  description: unique id of the parent product
+                related_product_id:
+                  type: integer
+                  description: unique id of the recommended product
+                type:
+                  type: string
+                  description: the category of recommendation (e.g., up-sell, x-sell, etc.)
+                priority:
+                  type: integer
+                  description: the priority of the recommendation (a lower number means higher priority)
+    """
     message = []
     request_type = request.args.get('type')
     request_product_id = request.args.get('product-id')
