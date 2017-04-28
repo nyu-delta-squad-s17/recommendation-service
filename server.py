@@ -311,8 +311,13 @@ def initialize_mysql(test=False):
         conn = connect_mysql(creds['username'], creds['password'], creds['hostname'], creds['port'], creds['name'])
     else:
         print("VCAP_SERVICES not found, checking localhost for MySQL")
+        response = os.system("ping -c 1 mysql")
+        if response == 0:
+            mysql_hostname = 'mysql'
+        else:
+            mysql_hostname = '127.0.0.1'
         if test:
-            engine = create_engine("mysql://%s:%s@%s:%s/%s" % ('root', '', '127.0.0.1', 3306, 'tdd'), echo = False)
+            engine = create_engine("mysql://%s:%s@%s:%s/%s" % ('root', '', mysql_hostname, 3306, 'tdd'), echo = False)
             meta = MetaData()
             recommendations = Table('recommendations', meta,
                 Column('id', Integer, nullable=False, primary_key=True),
@@ -328,7 +333,7 @@ def initialize_mysql(test=False):
             recommendations.create(engine, checkfirst=True)
             conn = engine.connect()
         else:
-            conn = connect_mysql('root', '', '127.0.0.1', 3306, 'nyudevops')
+            conn = connect_mysql('root', '', mysql_hostname, 3306, 'nyudevops')
             
 
 ######################################################################
