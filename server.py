@@ -143,9 +143,44 @@ def list_recommendations():
 ######################################################################
 @app.route('/recommendations/<int:id>', methods=['GET'])
 def get_recommendations(id):
-    '''
-    Given a ID, Output a single row of recommendations.
-    '''
+    """
+    Retrieve a single Recommendation given a ID
+    This endpoint will return a Recommendation based on it's id
+    ---
+    tags:
+      - Recommendations
+    produces:
+      - application/json
+    parameters:
+      - name: id
+        in: path
+        description: ID of Recommendation to retrieve
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Recommendation returned
+        schema:
+          id: Recommendation
+          properties:
+            id:
+              type: integer
+              description: unique id assigned internally by service
+            parent_product_id:
+              type: integer
+              description: unique id of the parent product
+            related_product_id:
+              type: integer
+              description: unique id of the recommended product
+            type:
+              type: string
+              description: the category of recommendation (e.g., up-sell, x-sell, etc.)
+            priority:
+              type: integer
+              description: the priority of the recommendation (a lower number means higher priority)
+      404:
+        description: Recommendation not found
+    """
     message = retrieve_by_id(id)
     rc = HTTP_200_OK
     if not message:
@@ -334,7 +369,7 @@ def initialize_mysql(test=False):
             conn = engine.connect()
         else:
             conn = connect_mysql('root', '', mysql_hostname, 3306, 'nyudevops')
-            
+
 
 ######################################################################
 #   M A I N
