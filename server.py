@@ -193,6 +193,64 @@ def get_recommendations(id):
 ######################################################################
 @app.route('/recommendations', methods=['POST'])
 def create_recommendations():
+    """
+    Create a new product recommendation relationship
+    This endpoint will create a recommendation based the data in the body that is posted
+    ---
+    tags:
+      - Recommendation
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          id: data
+          required:
+            - priority
+            - related_product_id
+            - type
+            - parent_product_id
+          properties:
+            parent_product_id:
+              type: integer
+              description: unique id of the parent product
+            related_product_id:
+              type: integer
+              description: unique id of the recommended product
+            type:
+              type: string
+              description: the category of recommendation (e.g., up-sell, x-sell, etc.)
+            priority:
+              type: integer
+              description: the priority of the recommendation (a lower number means higher priority)
+    responses:
+      201:
+        description: Recommendation created
+        schema:
+          id: Recommendation
+          properties:
+            id:
+              type: integer
+              description: unique id assigned internally by service
+            parent_product_id:
+              type: integer
+              description: unique id of the parent product
+            related_product_id:
+              type: integer
+              description: unique id of the recommended product
+            type:
+              type: string
+              description: the category of recommendation (e.g., up-sell, x-sell, etc.)
+            priority:
+              type: integer
+              description: the priority of the recommendation (a lower number means higher priority)
+      400:
+        description: Bad Request (the posted data was not valid)
+    """
     message, valid = is_valid(request.get_data())
     if valid:
         payload = json.loads(request.get_data())
