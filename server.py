@@ -273,9 +273,69 @@ def create_recommendations():
 ######################################################################
 @app.route('/recommendations/<int:id>', methods=['PUT'])
 def update_recommendations(id):
-    '''
-    Given a Recommendation ID, update all the columns as from the payload
-    '''
+    """
+    Given a Recommendation ID, update the columns as from the payload
+    This endpoint will update a Recommendation based the body that is posted
+    ---
+    tags:
+      - Recommendations
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - name: id
+        in: path
+        description: ID of recommendation to retrieve
+        type: integer
+        required: true
+      - in: body
+        name: body
+        required: true
+        schema:
+          id: data
+          required:
+            - priority
+            - related_product_id
+            - type
+            - parent_product_id
+          properties:
+            parent_product_id:
+              type: integer
+              description: unique id of the parent product
+            related_product_id:
+              type: integer
+              description: unique id of the recommended product
+            type:
+              type: string
+              description: the category of recommendation (e.g., up-sell, x-sell, etc.)
+            priority:
+              type: integer
+              description: the priority of the recommendation (a lower number means higher priority)
+    responses:
+      200:
+        description: Recommendation Updated
+        schema:
+           id: Recommendation
+           properties:
+             id:
+               type: integer
+               description: unique id assigned internally by service
+             parent_product_id:
+               type: integer
+               description: unique id of the parent product
+             related_product_id:
+               type: integer
+               description: unique id of the recommended product
+             type:
+               type: string
+               description: the category of recommendation (e.g., up-sell, x-sell, etc.)
+             priority:
+               type: integer
+               description: the priority of the recommendation (a lower number means higher priority)
+      400:
+        description: Bad Request (the posted data was not valid)
+    """
     if get_recommendations(id).status_code == 404:
         message = {'error': 'Recommendation with id: %s was not found' % str(id)}
         return reply(message, HTTP_404_NOT_FOUND)
