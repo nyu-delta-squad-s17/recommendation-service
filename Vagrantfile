@@ -50,6 +50,8 @@ Vagrant.configure(2) do |config|
     wget -O cf-cli-installer_6.24.0_x86-64.deb 'https://cli.run.pivotal.io/stable?release=debian64&version=6.24.0&source=github-rel'
     sudo dpkg -i cf-cli-installer_6.24.0_x86-64.deb
     rm cf-cli-installer_6.24.0_x86-64.deb
+    # Install the IBM Container plugin as vagrant
+    sudo -H -u vagrant bash -c "echo Y | cf install-plugin https://static-ice.ng.bluemix.net/ibm-containers-linux_x64"
     # Install app dependencies
     cd /vagrant
     sudo pip install -r requirements.txt
