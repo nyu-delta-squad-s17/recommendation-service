@@ -363,6 +363,23 @@ def update_recommendations(id):
 ######################################################################
 @app.route('/recommendations/<int:id>', methods=['DELETE'])
 def delete_recommendations(id):
+    """
+    Delete a single recommendation
+    This endpoint will delete a recommendation based on the id that is specificed
+    ---
+    tags:
+      - Recommendations
+    description: Delete a recommendation
+    parameters:
+      - name: id
+        in: path
+        description: ID of recommendation to be delete_recommendations
+        type: integer
+        required: true
+    responses:
+      204:
+        description: recommendation deleted
+    """
     if get_recommendations(id).status_code == 200:
         conn.execute("DELETE FROM recommendations WHERE id=%d" % id)
     return '', HTTP_204_NO_CONTENT
