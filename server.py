@@ -389,6 +389,37 @@ def delete_recommendations(id):
 ######################################################################
 @app.route('/recommendations/<int:id>/clicked', methods=['PUT'])
 def increase_priority(id):
+    """
+    Given a recommendation ID, update the priority as from the payload
+    This endpoint will increase the priority of a recommmendation based on the ID specificed
+    ---
+    tags:
+      - Recommendations
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - name: id
+        in: path
+        description: ID of recommendation to retrieve
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Recommendation priority Updated
+        schema:
+          id: Recommendation
+          properties:
+            id:
+              type: integer
+              description: unique id assigned to recommendation
+            priority:
+              type: integer
+              description: priority of the recommendation (lower the number, higher the priority)
+      404:
+        description: Recommendation not found
+    """
     if get_recommendations(id).status_code == 404:
         message = {'error': 'Recommendation with id: %s was not found' % str(id)}
         return reply(message, HTTP_404_NOT_FOUND)
