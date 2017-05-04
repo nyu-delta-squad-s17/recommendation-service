@@ -198,7 +198,7 @@ def create_recommendations():
     This endpoint will create a recommendation based the data in the body that is posted
     ---
     tags:
-      - Recommendation
+      - Recommendations
     consumes:
       - application/json
     produces:
